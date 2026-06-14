@@ -42,20 +42,6 @@ export type {
   Theme,
 } from "../engine/theme/ThemeSchema";
 
-// ─── Theme generator types (Task 2.26) ─────────────────────────────────────
-
-export type {
-  PaletteName,
-  TypographyPairingName,
-  SpacingScale,
-  CornerRadius,
-  AnimationStylePreset,
-  ThemeGeneratorParameters,
-} from "../engine/theme/ThemeSchema";
-
-export type { ThemeGeneratorOutput, TokensDoc } from "../engine/theme/ThemeGenerator";
-export { generateTheme } from "../engine/theme/ThemeGenerator";
-
 // ─── CRDT / document types (re-exported for convenience) ────────────────────
 
 export type {
