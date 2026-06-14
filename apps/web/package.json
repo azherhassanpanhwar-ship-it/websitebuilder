@@ -9,5 +9,10 @@
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "lib0": "^0.2.117",
+    "yjs": "^13.6.31",
+    "zod": "^4.4.3"
   }
 }
