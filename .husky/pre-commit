@@ -1,0 +1,12 @@
+#!/usr/bin/env sh
+# LATTICE pre-commit hook (Phase 0.1)
+# - Runs lint-staged against staged files when available
+# - Skips gracefully on a clean checkout where tooling is being bootstrapped
+#
+# To skip locally (NOT recommended): git commit --no-verify
+
+if pnpm exec lint-staged --help >/dev/null 2>&1; then
+  pnpm exec lint-staged
+else
+  echo "pre-commit: lint-staged not installed — skipping (run 'pnpm add -D lint-staged' to enable)"
+fi
