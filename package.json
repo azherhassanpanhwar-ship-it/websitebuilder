@@ -1,0 +1,34 @@
+{
+  "name": "lattice",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm --filter @lattice/web dev",
+    "build": "pnpm --filter @lattice/web build",
+    "start": "pnpm --filter @lattice/web start",
+    "lint": "pnpm --filter @lattice/web lint",
+    "typecheck": "pnpm --filter @lattice/web typecheck",
+    "format": "prettier --write \"**/*.{ts,tsx,js,mjs,cjs,json,md,css}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,mjs,cjs,json,md,css}\""
+  },
+  "dependencies": {
+    "lib0": "^0.2.117",
+    "lucide-react": "^1.18.0",
+    "next": "16.2.9",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "yjs": "^13.6.31",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.9",
+    "prettier": "^3.4.2",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}

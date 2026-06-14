@@ -1,0 +1,28 @@
+# Build artifacts
+.next
+out
+build
+dist
+.turbo
+coverage
+
+# Dependencies
+node_modules
+.pnpm-store
+
+# Lockfiles (pnpm handles formatting internally)
+pnpm-lock.yaml
+
+# Misc
+.husky/_
+.DS_Store
+*.min.js
+*.min.css
+*.log
+.env
+.env.local
+.env.*.local
+
+# Generated
+.tsbuildinfo
+next-env.d.ts

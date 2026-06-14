@@ -1,0 +1,13 @@
+{
+  "name": "@lattice/web",
+  "version": "0.1.0",
+  "private": true,
+  "description": "LATTICE editor + runtime (Next.js App Router)",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit"
+  }
+}
