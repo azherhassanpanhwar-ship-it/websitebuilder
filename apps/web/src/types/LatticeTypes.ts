@@ -6,14 +6,52 @@
  * Skill 3 — Zod Schema Validation
  *   "TypeScript types are inferred from Zod schemas — never defined separately."
  *
- *   This file re-exports `z.infer` types from the theme engine modules
- *   that exist on this branch. ThemeSchema's types (palette names, font
- *   pairings, the full `Theme` Zod schema) live on PR #4 and are re-merged
- *   once that lands on `main`.
- *
+ *   Theme types are re-exported here from src/engine/theme/ThemeSchema.ts.
+ *   Generator types are re-exported here from src/engine/theme/ThemeGenerator.ts.
  *   Switcher + Customizer types are re-exported from src/engine/theme/.
  *   Do NOT redeclare any of them.
  */
+
+// ─── Theme types (inferred from Zod — do not redefine) ─────────────────────
+
+export type {
+  TokenRef,
+  TokenRefOrLiteral,
+  ColorSettings,
+  FontFamily,
+  FontWeight,
+  TypographySettings,
+  LayoutDensity,
+  SpacingSettings,
+  ShadowStyle,
+  ShadowSettings,
+  HeroPattern,
+  HeaderStyle,
+  FooterStyle,
+  HeroSettings,
+  HeaderSettings,
+  FooterSettings,
+  AnimationStyle,
+  AnimationSettings,
+  ThemeSettings,
+  ThemePreset,
+  ThemeCategory,
+  DesignStyle,
+  ColorMood,
+  ThemeMetadata,
+  Theme,
+} from "../engine/theme/ThemeSchema";
+
+// ─── CRDT / document types (re-exported for convenience) ────────────────────
+
+export type {
+  BlockType as LatticeBlockType,
+  SectionLayout as LatticeSectionLayout,
+  BlockPropValue,
+  PageSnapshot,
+  SectionSnapshot,
+  BlockSnapshot,
+} from "../crdt/LatticeDoc";
 
 // ─── Theme Switcher types (Task 2.27) ──────────────────────────────────────
 
@@ -25,7 +63,7 @@ export type {
 } from "../engine/theme/ThemeSwitcher";
 export { switchTheme } from "../engine/theme/ThemeSwitcher";
 
-// ─── Theme Customizer types (Task 2.28) ───────────────────────────────────
+// ─── Theme Customizer types (Task 2.28) ────────────────────────────────────
 
 export type {
   OverrideMap,
@@ -58,3 +96,9 @@ export type SiteId = Brand<string, "SiteId">;
 // ─── Editor mode ────────────────────────────────────────────────────────────
 
 export type EditorMode = "edit" | "preview" | "publish";
+
+// ─── Theme catalog version (matches the metadata.version field) ──────────────
+
+/** Bump on every non-backwards-compatible change to ThemeSchema. */
+export const THEME_SCHEMA_VERSION = "1.0.0" as const;
+export type ThemeSchemaVersion = typeof THEME_SCHEMA_VERSION;

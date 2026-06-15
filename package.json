@@ -12,13 +12,10 @@
     "format:check": "prettier --check \"**/*.{ts,tsx,js,mjs,cjs,json,md,css}\""
   },
   "dependencies": {
-    "lib0": "^0.2.117",
     "lucide-react": "^1.18.0",
     "next": "16.2.9",
     "react": "19.2.4",
-    "react-dom": "19.2.4",
-    "yjs": "^13.6.31",
-    "zod": "^4.4.3"
+    "react-dom": "19.2.4"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
@@ -27,6 +24,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.2.9",
+    "lint-staged": "^17.0.7",
     "prettier": "^3.4.2",
     "tailwindcss": "^4",
     "typescript": "^5"
