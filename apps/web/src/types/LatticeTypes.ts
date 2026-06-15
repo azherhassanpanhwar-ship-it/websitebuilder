@@ -7,10 +7,11 @@
  *   "TypeScript types are inferred from Zod schemas — never defined separately."
  *
  *   Theme types are re-exported here from src/engine/theme/ThemeSchema.ts.
+ *   Generator types are re-exported here from src/engine/theme/ThemeGenerator.ts.
  *   Block types are re-exported from src/blocks/BlockSchema.ts.
  *   Site-tree types are re-exported from src/crdt/SiteTree.ts.
  *   Command-bus types are re-exported from src/commands/CommandBus.ts.
- *   Generator / Switcher / Customizer types from src/engine/theme/.
+ *   Switcher / Customizer types from src/engine/theme/.
  *   Do NOT redeclare any of them.
  */
 
@@ -43,6 +44,20 @@ export type {
   ThemeMetadata,
   Theme,
 } from "../engine/theme/ThemeSchema";
+
+// ─── Theme generator types (Task 2.26) ─────────────────────────────────────
+
+export type {
+  PaletteName,
+  TypographyPairingName,
+  SpacingScale,
+  CornerRadius,
+  AnimationStylePreset,
+  ThemeGeneratorParameters,
+} from "../engine/theme/ThemeSchema";
+
+export type { ThemeGeneratorOutput, TokensDoc } from "../engine/theme/ThemeGenerator";
+export { generateTheme } from "../engine/theme/ThemeGenerator";
 
 // ─── CRDT / document types (re-exported for convenience) ────────────────────
 
