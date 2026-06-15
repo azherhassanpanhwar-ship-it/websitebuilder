@@ -7,8 +7,10 @@
  *   "TypeScript types are inferred from Zod schemas — never defined separately."
  *
  *   Theme types are re-exported here from src/engine/theme/ThemeSchema.ts.
- *   Generator types are re-exported here from src/engine/theme/ThemeGenerator.ts.
- *   Switcher + Customizer types are re-exported from src/engine/theme/.
+ *   Block types are re-exported from src/blocks/BlockSchema.ts.
+ *   Site-tree types are re-exported from src/crdt/SiteTree.ts.
+ *   Command-bus types are re-exported from src/commands/CommandBus.ts.
+ *   Generator / Switcher / Customizer types from src/engine/theme/.
  *   Do NOT redeclare any of them.
  */
 
@@ -52,6 +54,30 @@ export type {
   SectionSnapshot,
   BlockSnapshot,
 } from "../crdt/LatticeDoc";
+
+// ─── Block registry types (inferred from Zod — do not redefine) ────────────
+
+export type {
+  BlockType,
+  BlockProps,
+  Block,
+  BlockDefinition,
+  BlockValidationResult,
+} from "../blocks/BlockSchema";
+
+// ─── Site tree types (re-exported for convenience) ─────────────────────────
+
+export type { PageMeta, Page, Section, BlockInstance, SectionLayout } from "../crdt/SiteTree";
+
+// ─── Command bus types ────────────────────────────────────────────────────
+
+export type { Command, CommandListener } from "../commands/CommandBus";
+export {
+  CommandBus,
+  AddBlockCommand,
+  RemoveBlockCommand,
+  UpdateBlockPropsCommand,
+} from "../commands/CommandBus";
 
 // ─── Theme Switcher types (Task 2.27) ──────────────────────────────────────
 
