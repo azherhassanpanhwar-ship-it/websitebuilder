@@ -1,6 +1,6 @@
 /**
- * LATTICE Theme Schema (Task 1.17)
- * ────────────────────────────────
+ * LATTICE Theme Schema (Task 1.17 / Task 2.26)
+ * ──────────────────────────────────────────────
  * The single source of truth for the shape of a LATTICE theme. Every theme
  * shipped in src/themes/** must validate against this schema before merge.
  *
@@ -416,3 +416,54 @@ export const Theme = z
   })
   .strict();
 export type Theme = z.infer<typeof Theme>;
+
+// ─────────────────────────────────────────────────────────────────────────────
+// 12. ThemeGeneratorParameters — input contract for the Theme Generator
+//    (Task 2.26). The 10 design knobs from CLAUDE.md §6.5.
+// ─────────────────────────────────────────────────────────────────────────────
+
+export const PaletteName = z.enum([
+  "warm",
+  "luxury",
+  "cool",
+  "minimal",
+  "bold",
+  "organic",
+]);
+export type PaletteName = z.infer<typeof PaletteName>;
+
+export const TypographyPairingName = z.enum([
+  "luxury-serif",
+  "modern-sans",
+  "editorial",
+  "friendly-sans",
+  "bold-condensed",
+]);
+export type TypographyPairingName = z.infer<typeof TypographyPairingName>;
+
+export const SpacingScale = z.enum(["compact", "comfortable", "spacious"]);
+export type SpacingScale = z.infer<typeof SpacingScale>;
+
+export const CornerRadius = z.enum(["sharp", "soft", "round"]);
+export type CornerRadius = z.infer<typeof CornerRadius>;
+
+export const AnimationStylePreset = z.enum(["none", "subtle", "bold"]);
+export type AnimationStylePreset = z.infer<typeof AnimationStylePreset>;
+
+export const ThemeGeneratorParameters = z
+  .object({
+    palette: PaletteName,
+    typographyPairing: TypographyPairingName,
+    spacingScale: SpacingScale,
+    layoutDensity: LayoutDensity,
+    cornerRadius: CornerRadius,
+    shadowStyle: ShadowStyle,
+    heroPattern: HeroPattern,
+    headerStyle: HeaderStyle,
+    footerStyle: FooterStyle,
+    animationStyle: AnimationStylePreset,
+    /** Free-form metadata — surfaced in the generated theme's `tags`. */
+    contentType: z.string().min(1).max(64).optional(),
+  })
+  .strict();
+export type ThemeGeneratorParameters = z.infer<typeof ThemeGeneratorParameters>;
