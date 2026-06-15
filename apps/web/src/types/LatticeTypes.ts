@@ -122,6 +122,35 @@ export {
   ThemeCustomizer,
 } from "../engine/theme/ThemeCustomizer";
 
+// ─── ThemeProvider types (UI bridge) ──────────────────────────────────────
+
+export type { ThemeContextValue, ThemeProviderProps } from "../engine/theme/ThemeProvider";
+export { ThemeProvider, useTheme, THEME_KEY } from "../engine/theme/ThemeProvider";
+
+// ─── Marketplace API types (Task 2.29) ────────────────────────────────────
+
+export type {
+  Author,
+  ThemeSubmitRequest,
+  ThemeSubmitResponse,
+  ThemeInstallRequest,
+  ThemeInstallResponse,
+  ThemeReviewAction,
+  ThemeReviewRequest,
+  ThemeReviewResponse,
+  ApiError,
+} from "../api/themes/schemas";
+export {
+  AuthorSchema,
+  ThemeSubmitRequestSchema,
+  ThemeSubmitResponseSchema,
+  ThemeInstallRequestSchema,
+  ThemeInstallResponseSchema,
+  ThemeReviewRequestSchema,
+  ThemeReviewResponseSchema,
+  ApiErrorSchema,
+} from "../api/themes/schemas";
+
 // ─── LATTICE-wide branded ids (compile-time safety) ────────────────────────
 
 declare const __brand: unique symbol;
