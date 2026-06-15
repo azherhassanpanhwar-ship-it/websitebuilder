@@ -95,13 +95,18 @@ export function EditorCanvas({ doc, fallback, className = "w-full" }: EditorCanv
   // The `tick` state exists ONLY to trigger re-renders. The content
   // itself is read from the Y.Doc on every render.
   const [tick, setTick] = React.useState(0);
-  const pages = doc.getArray<Y.Map<unknown>>(PAGES_KEY);
+  // Memoize the Y.Array so the useEffect dependency is stable across
+  // renders (otherwise observe/unobserve churns on every render).
+  const pages = React.useMemo(
+    () => doc.getArray<Y.Map<unknown>>(PAGES_KEY),
+    [doc],
+  );
 
   React.useEffect(() => {
     const handler = () => setTick((t) => t + 1);
     pages.observeDeep(handler);
     return () => pages.unobserveDeep(handler);
-  }, [doc]);
+  }, [pages]);
 
   if (pages.length === 0) {
     return <div className={className}>{fallback ?? null}</div>;
