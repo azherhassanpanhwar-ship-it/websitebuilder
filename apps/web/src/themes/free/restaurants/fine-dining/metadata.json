@@ -1,0 +1,62 @@
+{
+  "$schema": "https://lattice.app/schemas/theme-metadata.v1.json",
+  "slug": "fine-dining",
+  "name": "Fine Dining",
+  "tagline": "An evening, set with care.",
+  "category": "restaurants",
+  "subcategory": "fine-dining",
+  "tags": [
+    "luxury",
+    "serif",
+    "tasting-menu",
+    "reservations",
+    "sommelier",
+    "small-plate",
+    "candle-lit"
+  ],
+  "target_industry": "restaurants",
+  "design_style": "luxury",
+  "color_mood": "warm",
+  "hero_pattern": "full-bleed-image",
+  "density": "spacious",
+  "version": "1.0.0",
+  "semver": "1.0.0",
+  "kebab_case_slug": "fine-dining",
+  "wcag_level": "AA",
+  "preview": {
+    "screenshot": "preview.png",
+    "hero_image": "pexels-17057034.jpg",
+    "color_palette": ["#C9A84C", "#FAF6EE", "#2B2419", "#722F37", "#1F1A12"],
+    "typography": {
+      "display": "Cormorant Garamond",
+      "body": "Inter"
+    }
+  },
+  "design_laws_applied": [
+    "Design Law 1 — Restaurants / Fine Dining (warm neutrals + deep gold)",
+    "Design Law 2 — Luxury / Fine Dining typography (Cormorant Garamond + Inter)",
+    "Design Law 3 — Spacious density (luxury)",
+    "Design Law 4 — Full-bleed-image hero pattern",
+    "Design Law 5 — Sticky transparent header, mobile hamburger at md, 44px tap targets",
+    "Design Law 6 — Subtle animation (no continuous loops)",
+    "Design Law 7 — Sharp radius (0–2px)",
+    "Design Law 8 — Subtle shadow (xs–md)",
+    "Design Law 10 — Quality self-check pre-merge"
+  ],
+  "pages": ["index", "menu", "reservations", "about", "contact"],
+  "presets": ["bold", "minimal", "warm"],
+  "components": ["Hero", "Header", "Footer", "Menu", "ReservationForm"],
+  "deliverables": {
+    "tokens": "tokens.json",
+    "tailwind_config": "tailwind.config.ts",
+    "presets": [
+      "presets/bold.tokens.json",
+      "presets/minimal.tokens.json",
+      "presets/warm.tokens.json"
+    ],
+    "metadata": "metadata.json",
+    "readme": "README.md",
+    "marketplace": "marketplace.md",
+    "logo": "assets/logo.svg"
+  }
+}

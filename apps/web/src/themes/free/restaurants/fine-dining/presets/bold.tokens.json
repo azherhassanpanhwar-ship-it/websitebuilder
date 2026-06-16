@@ -1,0 +1,76 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "$description": "LATTICE Theme #1 — Fine Dining · BOLD preset. Token overrides only — the runtime merges this onto the base tokens in tokens.json. The base theme stays untouched. This preset deepens contrast: a darker hero gold, a darker footer surface, a tighter headline tracking, and slightly more pronounced shadows. Use this when you want the Fine Dining brand to feel weightier — the look-and-feel of a black-tie evening rather than a casual prix-fixe.",
+  "$metadata": {
+    "preset": "bold",
+    "base_theme": "fine-dining",
+    "design_intent": "Deeper contrast, stronger gold, weightier serif display. Press / launch / black-tie event variant.",
+    "see": ["../tokens.json (base)", "CLAUDE.md §6 quality bar (3 presets required)"]
+  },
+
+  "color": {
+    "primary": {
+      "500": {
+        "$value": "#B8923C",
+        "$type": "color",
+        "$description": "Deeper hero gold — for high-contrast headlines, primary CTA on dark surfaces"
+      },
+      "700": {
+        "$value": "#7A6528",
+        "$type": "color",
+        "$description": "Darker hover/pressed state"
+      },
+      "900": {
+        "$value": "#4D3F1A",
+        "$type": "color",
+        "$description": "Almost-black gold for text on light surface"
+      }
+    },
+    "surfaceDark": {
+      "$value": "#1A1410",
+      "$type": "color",
+      "$description": "Darker footer / inverse — pushes contrast ratio with white text"
+    },
+    "text": {
+      "$value": "#0F0B05",
+      "$type": "color",
+      "$description": "Near-black body text for maximum reading contrast"
+    },
+    "textMuted": {
+      "$value": "#4A4032",
+      "$type": "color",
+      "$description": "Slightly stronger muted — keeps the muted/on-surface ratio above 4.5:1 in BOLD"
+    }
+  },
+
+  "shadow": {
+    "md": {
+      "$value": "0 6px 10px rgba(15, 10, 5, 0.10), 0 3px 6px rgba(15, 10, 5, 0.08)",
+      "$type": "shadow",
+      "$description": "More pronounced card shadow"
+    },
+    "lg": {
+      "$value": "0 16px 24px rgba(15, 10, 5, 0.12), 0 6px 8px rgba(15, 10, 5, 0.06)",
+      "$type": "shadow",
+      "$description": "Heavier hover lift"
+    },
+    "colored": {
+      "$value": "0 12px 32px rgba(184, 146, 60, 0.30)",
+      "$type": "shadow",
+      "$description": "Stronger gold halo around primary buttons"
+    }
+  },
+
+  "letterSpacing": {
+    "display": {
+      "$value": "0em",
+      "$type": "dimension",
+      "$description": "Tightened headline tracking — Cormorant Garamond looks more assertive at zero tracking"
+    },
+    "eyebrow": {
+      "$value": "0.22em",
+      "$type": "dimension",
+      "$description": "Wider eyebrow — pushes the editorial gravitas"
+    }
+  }
+}

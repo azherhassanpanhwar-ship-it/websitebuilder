@@ -1,0 +1,68 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "$description": "LATTICE Theme #1 — Fine Dining · WARM preset. Token overrides only. Warmer surface tones (more terracotta in the cream), a softer gold, and an amber-tinted dark surface. Use this when the Fine Dining brand needs to feel intimate, candlelit, late-summer — a long Sunday lunch, a harvest menu, a wine-paired dinner in November.",
+  "$metadata": {
+    "preset": "warm",
+    "base_theme": "fine-dining",
+    "design_intent": "Warmer neutrals (terracotta undertone), softer gold, amber-tinted dark surface. Harvest / candlelit / Sunday-lunch variant.",
+    "see": ["../tokens.json (base)", "CLAUDE.md §6 quality bar (3 presets required)"]
+  },
+
+  "color": {
+    "primary": {
+      "200": { "$value": "#EBD7B0", "$type": "color", "$description": "Warmer cream-gold tint" },
+      "500": {
+        "$value": "#C9A14C",
+        "$type": "color",
+        "$description": "Warm hero gold — pulls slightly amber"
+      },
+      "700": { "$value": "#967628", "$type": "color", "$description": "Warm pressed" }
+    },
+    "surface": {
+      "$value": "#F8F0E0",
+      "$type": "color",
+      "$description": "Warm cream — more terracotta than the base surface"
+    },
+    "surfaceAlt": { "$value": "#EBDCC4", "$type": "color", "$description": "Warm card surface" },
+    "surfaceDark": {
+      "$value": "#3A2A1A",
+      "$type": "color",
+      "$description": "Amber-tinted dark surface — candle-warm, not espresso-cool"
+    },
+    "text": { "$value": "#241B10", "$type": "color", "$description": "Slightly warmer body text" },
+    "textMuted": {
+      "$value": "#735A40",
+      "$type": "color",
+      "$description": "Warm muted — sits naturally on the warmer surfaces"
+    }
+  },
+
+  "shadow": {
+    "colored": {
+      "$value": "0 8px 24px rgba(201, 161, 76, 0.32)",
+      "$type": "color",
+      "$description": "Amber-tinted primary halo — softer than the base"
+    }
+  },
+
+  "letterSpacing": {
+    "eyebrow": {
+      "$value": "0.16em",
+      "$type": "dimension",
+      "$description": "Slightly tighter eyebrow for the warm, conversational feel"
+    }
+  },
+
+  "duration": {
+    "base": {
+      "$value": "300ms",
+      "$type": "duration",
+      "$description": "Slightly slower — the WARM preset feels a touch more relaxed"
+    },
+    "enter": {
+      "$value": "500ms",
+      "$type": "duration",
+      "$description": "More leisurely entrance animations"
+    }
+  }
+}
