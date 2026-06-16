@@ -40,7 +40,7 @@ export const TYPOGRAPHY_PAIRINGS: Record<TypographyPairingName, TypographyPairin
     bodyLineHeight: 1.5,
     displayLineHeight: 1.0,
   },
-  "editorial": {
+  editorial: {
     display: '"Lora", "Libre Baskerville", Georgia, serif',
     body: '"Inter", "Source Serif Pro", Georgia, serif',
     weights: { regular: 400, medium: 500, bold: 700 },

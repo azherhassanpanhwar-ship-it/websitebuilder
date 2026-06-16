@@ -149,10 +149,7 @@ function NewsletterForm({
   cta: string;
 }) {
   return (
-    <form
-      className="flex flex-col gap-[var(--space-2)]"
-      onSubmit={(e) => e.preventDefault()}
-    >
+    <form className="flex flex-col gap-[var(--space-2)]" onSubmit={(e) => e.preventDefault()}>
       <label
         htmlFor="footer-newsletter"
         className="text-[length:var(--space-4)] font-semibold text-[color:var(--color-on-primary)]"
@@ -189,11 +186,11 @@ function SocialRow({
   const items =
     socials && socials.length > 0
       ? socials
-      : ([
+      : [
           { platform: "github" as const, href: "https://github.com" },
           { platform: "twitter" as const, href: "https://twitter.com" },
           { platform: "linkedin" as const, href: "https://linkedin.com" },
-        ]);
+        ];
   return (
     <div className="flex items-center gap-[var(--space-3)]">
       {items.map((s) => {

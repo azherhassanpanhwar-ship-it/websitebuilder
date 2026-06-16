@@ -289,9 +289,11 @@ export class LatticeDoc {
         ? blocks.toArray().map((b) => ({
             id: String(b.get("id")),
             type: b.get("type") as BlockType,
-            props: ((b.get("props") as Y.Map<unknown> | undefined)?.toJSON() ??
-              {}) as Record<string, BlockPropValue>,
-            contentText: ((b.get("content") as Y.Text | undefined)?.toString() ?? ""),
+            props: ((b.get("props") as Y.Map<unknown> | undefined)?.toJSON() ?? {}) as Record<
+              string,
+              BlockPropValue
+            >,
+            contentText: (b.get("content") as Y.Text | undefined)?.toString() ?? "",
           }))
         : [],
     };

@@ -13,77 +13,125 @@
   },
 
   "space": {
-    "0":  { "$value": "0",      "$type": "dimension", "$description": "Reset / no spacing" },
-    "1":  { "$value": "4px",    "$type": "dimension", "$description": "Micro gaps, icon padding" },
-    "2":  { "$value": "8px",    "$type": "dimension", "$description": "Tight component gaps (8px base unit)" },
-    "3":  { "$value": "12px",   "$type": "dimension", "$description": "Small component gaps" },
-    "4":  { "$value": "16px",   "$type": "dimension", "$description": "Base unit — default padding" },
-    "5":  { "$value": "24px",   "$type": "dimension", "$description": "Comfortable component gaps" },
-    "6":  { "$value": "32px",   "$type": "dimension", "$description": "Section sub-gaps" },
-    "7":  { "$value": "48px",   "$type": "dimension", "$description": "Section padding mobile" },
-    "8":  { "$value": "64px",   "$type": "dimension", "$description": "Section padding mobile" },
-    "9":  { "$value": "96px",   "$type": "dimension", "$description": "Section padding desktop" },
-    "10": { "$value": "128px",  "$type": "dimension", "$description": "Hero vertical rhythm" },
-    "11": { "$value": "160px",  "$type": "dimension", "$description": "XL hero padding" }
+    "0": { "$value": "0", "$type": "dimension", "$description": "Reset / no spacing" },
+    "1": { "$value": "4px", "$type": "dimension", "$description": "Micro gaps, icon padding" },
+    "2": {
+      "$value": "8px",
+      "$type": "dimension",
+      "$description": "Tight component gaps (8px base unit)"
+    },
+    "3": { "$value": "12px", "$type": "dimension", "$description": "Small component gaps" },
+    "4": { "$value": "16px", "$type": "dimension", "$description": "Base unit — default padding" },
+    "5": { "$value": "24px", "$type": "dimension", "$description": "Comfortable component gaps" },
+    "6": { "$value": "32px", "$type": "dimension", "$description": "Section sub-gaps" },
+    "7": { "$value": "48px", "$type": "dimension", "$description": "Section padding mobile" },
+    "8": { "$value": "64px", "$type": "dimension", "$description": "Section padding mobile" },
+    "9": { "$value": "96px", "$type": "dimension", "$description": "Section padding desktop" },
+    "10": { "$value": "128px", "$type": "dimension", "$description": "Hero vertical rhythm" },
+    "11": { "$value": "160px", "$type": "dimension", "$description": "XL hero padding" }
   },
 
   "radius": {
-    "none":  { "$value": "0",      "$type": "dimension", "$description": "Sharp corners (law firms, architecture, editorial)" },
-    "xs":    { "$value": "2px",    "$type": "dimension", "$description": "Badges, tags, chips" },
-    "sm":    { "$value": "4px",    "$type": "dimension", "$description": "Inputs, small buttons" },
-    "md":    { "$value": "8px",    "$type": "dimension", "$description": "Cards, buttons — default" },
-    "lg":    { "$value": "12px",   "$type": "dimension", "$description": "Modals, panels" },
-    "xl":    { "$value": "16px",   "$type": "dimension", "$description": "Hero images, large cards" },
-    "2xl":   { "$value": "24px",   "$type": "dimension", "$description": "Full soft (wellness, friendly)" },
-    "full":  { "$value": "9999px", "$type": "dimension", "$description": "Pills, avatars, toggles (bakery, kids, ice cream)" }
+    "none": {
+      "$value": "0",
+      "$type": "dimension",
+      "$description": "Sharp corners (law firms, architecture, editorial)"
+    },
+    "xs": { "$value": "2px", "$type": "dimension", "$description": "Badges, tags, chips" },
+    "sm": { "$value": "4px", "$type": "dimension", "$description": "Inputs, small buttons" },
+    "md": { "$value": "8px", "$type": "dimension", "$description": "Cards, buttons — default" },
+    "lg": { "$value": "12px", "$type": "dimension", "$description": "Modals, panels" },
+    "xl": { "$value": "16px", "$type": "dimension", "$description": "Hero images, large cards" },
+    "2xl": {
+      "$value": "24px",
+      "$type": "dimension",
+      "$description": "Full soft (wellness, friendly)"
+    },
+    "full": {
+      "$value": "9999px",
+      "$type": "dimension",
+      "$description": "Pills, avatars, toggles (bakery, kids, ice cream)"
+    }
   },
 
   "shadow": {
-    "none":     { "$value": "none",                                                "$type": "shadow", "$description": "Flat (editorial, minimal SaaS)" },
-    "xs":       { "$value": "0 1px 2px rgba(0, 0, 0, 0.05)",                       "$type": "shadow", "$description": "Hairline elevation" },
-    "sm":       { "$value": "0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06)", "$type": "shadow", "$description": "Subtle lift" },
-    "md":       { "$value": "0 4px 6px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.06)", "$type": "shadow", "$description": "Default card shadow" },
-    "lg":       { "$value": "0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05)", "$type": "shadow", "$description": "Hover lift, prominent cards" },
-    "xl":       { "$value": "0 20px 25px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.04)", "$type": "shadow", "$description": "Modal / overlay" },
-    "colored":  { "$value": "0 8px 24px rgba(0, 0, 0, 0.25)",                      "$type": "shadow", "$description": "Colored halo (rendered with var(--color-primary-rgb) at theme layer)" },
-    "inner":    { "$value": "inset 0 2px 4px rgba(0, 0, 0, 0.06)",                  "$type": "shadow", "$description": "Pressed / inset" }
+    "none": {
+      "$value": "none",
+      "$type": "shadow",
+      "$description": "Flat (editorial, minimal SaaS)"
+    },
+    "xs": {
+      "$value": "0 1px 2px rgba(0, 0, 0, 0.05)",
+      "$type": "shadow",
+      "$description": "Hairline elevation"
+    },
+    "sm": {
+      "$value": "0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06)",
+      "$type": "shadow",
+      "$description": "Subtle lift"
+    },
+    "md": {
+      "$value": "0 4px 6px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.06)",
+      "$type": "shadow",
+      "$description": "Default card shadow"
+    },
+    "lg": {
+      "$value": "0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05)",
+      "$type": "shadow",
+      "$description": "Hover lift, prominent cards"
+    },
+    "xl": {
+      "$value": "0 20px 25px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.04)",
+      "$type": "shadow",
+      "$description": "Modal / overlay"
+    },
+    "colored": {
+      "$value": "0 8px 24px rgba(0, 0, 0, 0.25)",
+      "$type": "shadow",
+      "$description": "Colored halo (rendered with var(--color-primary-rgb) at theme layer)"
+    },
+    "inner": {
+      "$value": "inset 0 2px 4px rgba(0, 0, 0, 0.06)",
+      "$type": "shadow",
+      "$description": "Pressed / inset"
+    }
   },
 
   "css": {
     "$description": "The mapping from token name → CSS custom property. ThemeGenerator emits these as :root rules in globals.css. Components consume `var(--space-4)` etc. — never the raw px.",
     "space": {
-      "--space-0":  { "$value": "{space.0.$value}",  "$type": "dimension" },
-      "--space-1":  { "$value": "{space.1.$value}",  "$type": "dimension" },
-      "--space-2":  { "$value": "{space.2.$value}",  "$type": "dimension" },
-      "--space-3":  { "$value": "{space.3.$value}",  "$type": "dimension" },
-      "--space-4":  { "$value": "{space.4.$value}",  "$type": "dimension" },
-      "--space-5":  { "$value": "{space.5.$value}",  "$type": "dimension" },
-      "--space-6":  { "$value": "{space.6.$value}",  "$type": "dimension" },
-      "--space-7":  { "$value": "{space.7.$value}",  "$type": "dimension" },
-      "--space-8":  { "$value": "{space.8.$value}",  "$type": "dimension" },
-      "--space-9":  { "$value": "{space.9.$value}",  "$type": "dimension" },
+      "--space-0": { "$value": "{space.0.$value}", "$type": "dimension" },
+      "--space-1": { "$value": "{space.1.$value}", "$type": "dimension" },
+      "--space-2": { "$value": "{space.2.$value}", "$type": "dimension" },
+      "--space-3": { "$value": "{space.3.$value}", "$type": "dimension" },
+      "--space-4": { "$value": "{space.4.$value}", "$type": "dimension" },
+      "--space-5": { "$value": "{space.5.$value}", "$type": "dimension" },
+      "--space-6": { "$value": "{space.6.$value}", "$type": "dimension" },
+      "--space-7": { "$value": "{space.7.$value}", "$type": "dimension" },
+      "--space-8": { "$value": "{space.8.$value}", "$type": "dimension" },
+      "--space-9": { "$value": "{space.9.$value}", "$type": "dimension" },
       "--space-10": { "$value": "{space.10.$value}", "$type": "dimension" },
       "--space-11": { "$value": "{space.11.$value}", "$type": "dimension" }
     },
     "radius": {
       "--radius-none": { "$value": "{radius.none.$value}", "$type": "dimension" },
-      "--radius-xs":   { "$value": "{radius.xs.$value}",   "$type": "dimension" },
-      "--radius-sm":   { "$value": "{radius.sm.$value}",   "$type": "dimension" },
-      "--radius-md":   { "$value": "{radius.md.$value}",   "$type": "dimension" },
-      "--radius-lg":   { "$value": "{radius.lg.$value}",   "$type": "dimension" },
-      "--radius-xl":   { "$value": "{radius.xl.$value}",   "$type": "dimension" },
-      "--radius-2xl":  { "$value": "{radius.2xl.$value}",  "$type": "dimension" },
+      "--radius-xs": { "$value": "{radius.xs.$value}", "$type": "dimension" },
+      "--radius-sm": { "$value": "{radius.sm.$value}", "$type": "dimension" },
+      "--radius-md": { "$value": "{radius.md.$value}", "$type": "dimension" },
+      "--radius-lg": { "$value": "{radius.lg.$value}", "$type": "dimension" },
+      "--radius-xl": { "$value": "{radius.xl.$value}", "$type": "dimension" },
+      "--radius-2xl": { "$value": "{radius.2xl.$value}", "$type": "dimension" },
       "--radius-full": { "$value": "{radius.full.$value}", "$type": "dimension" }
     },
     "shadow": {
-      "--shadow-none":    { "$value": "{shadow.none.$value}",    "$type": "shadow" },
-      "--shadow-xs":      { "$value": "{shadow.xs.$value}",      "$type": "shadow" },
-      "--shadow-sm":      { "$value": "{shadow.sm.$value}",      "$type": "shadow" },
-      "--shadow-md":      { "$value": "{shadow.md.$value}",      "$type": "shadow" },
-      "--shadow-lg":      { "$value": "{shadow.lg.$value}",      "$type": "shadow" },
-      "--shadow-xl":      { "$value": "{shadow.xl.$value}",      "$type": "shadow" },
+      "--shadow-none": { "$value": "{shadow.none.$value}", "$type": "shadow" },
+      "--shadow-xs": { "$value": "{shadow.xs.$value}", "$type": "shadow" },
+      "--shadow-sm": { "$value": "{shadow.sm.$value}", "$type": "shadow" },
+      "--shadow-md": { "$value": "{shadow.md.$value}", "$type": "shadow" },
+      "--shadow-lg": { "$value": "{shadow.lg.$value}", "$type": "shadow" },
+      "--shadow-xl": { "$value": "{shadow.xl.$value}", "$type": "shadow" },
       "--shadow-colored": { "$value": "{shadow.colored.$value}", "$type": "shadow" },
-      "--shadow-inner":   { "$value": "{shadow.inner.$value}",   "$type": "shadow" }
+      "--shadow-inner": { "$value": "{shadow.inner.$value}", "$type": "shadow" }
     }
   }
 }

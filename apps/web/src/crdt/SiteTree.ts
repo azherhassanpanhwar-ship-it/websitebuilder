@@ -35,13 +35,7 @@ import { BlockType } from "../blocks/BlockSchema";
 
 // ─── Section layout (the role a section plays in its page) ────────────────
 
-export const SectionLayout = [
-  "full-bleed",
-  "contained",
-  "split",
-  "grid",
-  "stack",
-] as const;
+export const SectionLayout = ["full-bleed", "contained", "split", "grid", "stack"] as const;
 export type SectionLayout = (typeof SectionLayout)[number];
 
 // ─── Plain-JS snapshots (view side) ────────────────────────────────────────
@@ -258,19 +252,14 @@ export class SiteTree {
   snapshot(): Page[] {
     return this.pages
       .toArray()
-      .sort(
-        (a, b) => Number(a.get("order") ?? 0) - Number(b.get("order") ?? 0),
-      )
+      .sort((a, b) => Number(a.get("order") ?? 0) - Number(b.get("order") ?? 0))
       .map((p) => this.snapshotPage(p))
       .filter((p): p is Page => Boolean(p));
   }
 
   // ─── Internals ────────────────────────────────────────────────────────
 
-  private findById(
-    arr: Y.Array<Y.Map<unknown>>,
-    id: string,
-  ): Y.Map<unknown> | undefined {
+  private findById(arr: Y.Array<Y.Map<unknown>>, id: string): Y.Map<unknown> | undefined {
     for (let i = 0; i < arr.length; i++) {
       if (arr.get(i).get("id") === id) return arr.get(i);
     }
@@ -297,8 +286,7 @@ export class SiteTree {
       description: String(page.get("description") ?? ""),
       isHome: Boolean(page.get("isHome")),
       order: Number(page.get("order") ?? 0),
-      meta:
-        ((page.get("meta") as Y.Map<unknown>).toJSON() as PageMeta) ?? {},
+      meta: ((page.get("meta") as Y.Map<unknown>).toJSON() as PageMeta) ?? {},
       sections: sections.toArray().map((s) => this.snapshotSection(s)),
     };
   }
@@ -313,11 +301,7 @@ export class SiteTree {
       blocks: blocks.toArray().map((b) => ({
         id: String(b.get("id")),
         type: b.get("type") as BlockType,
-        props:
-          ((b.get("props") as Y.Map<unknown>).toJSON() as Record<
-            string,
-            unknown
-          >) ?? {},
+        props: ((b.get("props") as Y.Map<unknown>).toJSON() as Record<string, unknown>) ?? {},
       })),
     };
   }

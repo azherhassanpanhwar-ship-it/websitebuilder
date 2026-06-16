@@ -17,8 +17,8 @@ export default function Home() {
             LATTICE — Phase 0 scaffold ready.
           </h1>
           <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Next-gen visual website builder. 62 first-party free themes at GA.
-            500 by Year 1. WCAG 2.2 AA. Lighthouse 95+ p50.
+            Next-gen visual website builder. 62 first-party free themes at GA. 500 by Year 1. WCAG
+            2.2 AA. Lighthouse 95+ p50.
           </p>
         </div>
       </main>

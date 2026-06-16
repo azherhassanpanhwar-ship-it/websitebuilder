@@ -39,10 +39,7 @@ import { z } from "zod";
  * fonts / shadow values. Logical keys are translated to CSS variable
  * names by the customizer at apply time.
  */
-export const OverrideMapSchema = z.record(
-  z.string().min(1).max(64),
-  z.string().min(1).max(2048),
-);
+export const OverrideMapSchema = z.record(z.string().min(1).max(64), z.string().min(1).max(2048));
 export type OverrideMap = z.infer<typeof OverrideMapSchema>;
 
 /** A single override entry as it might come from a form input. */
@@ -58,10 +55,7 @@ export type OverrideEntry = z.infer<typeof OverrideEntrySchema>;
  */
 export const CssKeySchema = z
   .string()
-  .regex(
-    /^--[a-z][a-z0-9-]*$/,
-    "CSS variable keys must start with `--` and use kebab-case",
-  );
+  .regex(/^--[a-z][a-z0-9-]*$/, "CSS variable keys must start with `--` and use kebab-case");
 
 /** A single css-var declaration in the resolved map. */
 export const CssValueSchema = z.object({
@@ -267,11 +261,8 @@ export class ThemeCustomizer {
    * the unsubscribe function. The callback receives a list of Yjs events
    * — one per local or remote override change.
    */
-  observeYjs(
-    callback: (events: Y.YEvent<Y.AbstractType<unknown>>[]) => void,
-  ): () => void {
-    const handler = (events: Y.YEvent<Y.AbstractType<unknown>>[]) =>
-      callback(events);
+  observeYjs(callback: (events: Y.YEvent<Y.AbstractType<unknown>>[]) => void): () => void {
+    const handler = (events: Y.YEvent<Y.AbstractType<unknown>>[]) => callback(events);
     this.overrides.observeDeep(handler);
     return () => this.overrides.unobserveDeep(handler);
   }

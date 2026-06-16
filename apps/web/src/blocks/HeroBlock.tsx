@@ -74,7 +74,8 @@ export function HeroBlock(props: HeroBlockProps) {
     alignment = "bottom",
   } = props;
 
-  const isFullBleed = pattern === "full-bleed-image" || pattern === "dark-moody" || pattern === "video-background";
+  const isFullBleed =
+    pattern === "full-bleed-image" || pattern === "dark-moody" || pattern === "video-background";
   const isDark = pattern === "dark-moody";
 
   return (
@@ -114,7 +115,11 @@ export function HeroBlock(props: HeroBlockProps) {
           ALIGN_JUSTIFY[alignment],
         ].join(" ")}
       >
-        <div className={["flex max-w-3xl flex-col gap-[var(--space-4)]", ALIGN_ITEMS[alignment]].join(" ")}>
+        <div
+          className={["flex max-w-3xl flex-col gap-[var(--space-4)]", ALIGN_ITEMS[alignment]].join(
+            " ",
+          )}
+        >
           <h1
             className={[
               "font-[family-name:var(--font-display)] font-semibold tracking-tight",
@@ -129,13 +134,15 @@ export function HeroBlock(props: HeroBlockProps) {
               className={[
                 "font-[family-name:var(--font-body)]",
                 "text-[length:var(--space-5)] leading-[1.5]",
-                isFullBleed ? "text-[color:var(--color-on-primary)] opacity-90" : "text-[color:var(--color-text-muted)]",
+                isFullBleed
+                  ? "text-[color:var(--color-on-primary)] opacity-90"
+                  : "text-[color:var(--color-text-muted)]",
               ].join(" ")}
             >
               {subtitle}
             </p>
           ) : null}
-          {(ctaLabel || secondaryCtaLabel) ? (
+          {ctaLabel || secondaryCtaLabel ? (
             <div
               className={[
                 "mt-[var(--space-4)] flex flex-wrap items-center gap-[var(--space-4)]",
@@ -158,7 +165,10 @@ export function HeroBlock(props: HeroBlockProps) {
                   ].join(" ")}
                 >
                   {ctaLabel}
-                  <ArrowRight className="h-[var(--space-4)] w-[var(--space-4)]" aria-hidden="true" />
+                  <ArrowRight
+                    className="h-[var(--space-4)] w-[var(--space-4)]"
+                    aria-hidden="true"
+                  />
                 </a>
               ) : null}
               {secondaryCtaLabel && secondaryCtaHref ? (

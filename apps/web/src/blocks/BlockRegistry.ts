@@ -141,15 +141,10 @@ export class BlockRegistry {
    * is detached — the caller is responsible for pushing it into a
    * Section's `blocks` Y.Array (typically via the Command bus).
    */
-  createInstance(
-    type: string,
-    overrides?: Record<string, unknown>,
-  ): Y.Map<unknown> {
+  createInstance(type: string, overrides?: Record<string, unknown>): Y.Map<unknown> {
     const def = this.definitions.get(type);
     if (!def) {
-      throw new Error(
-        `Block type "${type}" is not registered. Call register() first.`,
-      );
+      throw new Error(`Block type "${type}" is not registered. Call register() first.`);
     }
     const defaults = DEFAULT_PROPS[type] ?? def.defaultProps ?? {};
     const merged = { ...defaults, ...def.defaultProps, ...overrides };
@@ -195,9 +190,7 @@ export class BlockRegistry {
     if (result.success) return { valid: true, errors: [] };
     return {
       valid: false,
-      errors: result.error.issues.map(
-        (e) => `${e.path.join(".") || "(root)"}: ${e.message}`,
-      ),
+      errors: result.error.issues.map((e) => `${e.path.join(".") || "(root)"}: ${e.message}`),
     };
   }
 
@@ -206,17 +199,15 @@ export class BlockRegistry {
    * This is the shape the Zod schema validates against.
    */
   private snapshotBlock(block: Y.Map<unknown>): Block {
-    const children = block.get("children") as
-      | Y.Array<Y.Map<unknown>>
-      | undefined;
+    const children = block.get("children") as Y.Array<Y.Map<unknown>> | undefined;
     return {
       id: String(block.get("id") ?? ""),
       type: block.get("type") as Block["type"],
-      props: ((block.get("props") as Y.Map<unknown> | undefined)?.toJSON() ??
-        {}) as Record<string, unknown>,
-      children: children
-        ? children.toArray().map((c) => this.snapshotBlock(c))
-        : undefined,
+      props: ((block.get("props") as Y.Map<unknown> | undefined)?.toJSON() ?? {}) as Record<
+        string,
+        unknown
+      >,
+      children: children ? children.toArray().map((c) => this.snapshotBlock(c)) : undefined,
     };
   }
 }

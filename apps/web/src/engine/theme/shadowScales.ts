@@ -14,10 +14,7 @@ export type ShadowStyle = "none" | "subtle" | "pronounced";
 
 export const SHADOW_SCALES: Record<
   ShadowStyle,
-  Record<
-    "none" | "xs" | "sm" | "md" | "lg" | "xl" | "colored" | "inner",
-    string
-  >
+  Record<"none" | "xs" | "sm" | "md" | "lg" | "xl" | "colored" | "inner", string>
 > = {
   none: {
     none: "none",

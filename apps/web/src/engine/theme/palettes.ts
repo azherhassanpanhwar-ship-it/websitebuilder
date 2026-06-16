@@ -50,13 +50,7 @@ export interface ColorPalette {
   success: string;
 }
 
-export type PaletteName =
-  | "warm"
-  | "luxury"
-  | "cool"
-  | "minimal"
-  | "bold"
-  | "organic";
+export type PaletteName = "warm" | "luxury" | "cool" | "minimal" | "bold" | "organic";
 
 /**
  * The lookup table. Order is stable (alphabetical for determinism in

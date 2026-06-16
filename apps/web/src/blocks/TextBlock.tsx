@@ -53,13 +53,7 @@ const VARIANT: Record<NonNullable<TextBlockProps["variant"]>, string> = {
 };
 
 export function TextBlock(props: TextBlockProps) {
-  const {
-    content = "",
-    align = "left",
-    size = "md",
-    variant = "body",
-    html,
-  } = props;
+  const { content = "", align = "left", size = "md", variant = "body", html } = props;
 
   const classes = [
     ALIGN[align],
@@ -75,13 +69,7 @@ export function TextBlock(props: TextBlockProps) {
 
   if (html !== undefined) {
     // `html` is opt-in (theme author is responsible for sanitization).
-    return (
-      <div
-        className={classes}
-        // eslint-disable-next-line react/no-danger
-        dangerouslySetInnerHTML={{ __html: html }}
-      />
-    );
+    return <div className={classes} dangerouslySetInnerHTML={{ __html: html }} />;
   }
   return <p className={classes}>{content}</p>;
 }

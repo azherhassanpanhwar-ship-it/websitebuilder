@@ -156,10 +156,7 @@ export class CommandBus<TState extends SiteTree = SiteTree> {
     return () => this.listeners.delete(listener);
   }
 
-  private emit(
-    kind: "execute" | "undo" | "redo",
-    command: Command<TState>,
-  ): void {
+  private emit(kind: "execute" | "undo" | "redo", command: Command<TState>): void {
     this.listeners.forEach((l) =>
       l({ kind, command, pointer: this.pointer, size: this.history.length }),
     );
@@ -180,9 +177,7 @@ const AddBlockInput = z.object({
   pageId: z.string().min(1),
   sectionId: z.string().min(1),
   type: z.string().min(1) as z.ZodType<BlockType>,
-  props: z.record(z.string(), z.unknown()).optional() as z.ZodType<
-    BlockProps | undefined
-  >,
+  props: z.record(z.string(), z.unknown()).optional() as z.ZodType<BlockProps | undefined>,
 });
 
 /** Add a new block to a section. */
@@ -248,8 +243,8 @@ export class RemoveBlockCommand implements Command {
         const b = blocks.get(j);
         if (b.get("id") === this.input.blockId) {
           this.blockType = b.get("type") as BlockType;
-          this.snapshot = ((b.get("props") as import("yjs").Map<unknown>)
-            .toJSON() ?? {}) as BlockProps;
+          this.snapshot = ((b.get("props") as import("yjs").Map<unknown>).toJSON() ??
+            {}) as BlockProps;
           break;
         }
       }
@@ -264,12 +259,7 @@ export class RemoveBlockCommand implements Command {
     // require observing the array position at execute time — left as a
     // future refinement; the public API guarantees correctness, not
     // exact positional restoration.
-    state.addBlock(
-      this.input.pageId,
-      this.input.sectionId,
-      this.blockType,
-      this.snapshot,
-    );
+    state.addBlock(this.input.pageId, this.input.sectionId, this.blockType, this.snapshot);
   }
 }
 
