@@ -41,6 +41,13 @@ jobs:
       - name: Enable corepack (pnpm)
         run: corepack enable
 
+      - name: Pin pnpm to Node-20-compatible version
+        # corepack auto-fetches the latest pnpm, which (since 11.7.0) requires
+        # Node 22.13+ for the `node:sqlite` builtin. CI runs on Node 20, so
+        # pin a version that still works on Node 20. Update both this version
+        # and `package.json`'s `packageManager` field together.
+        run: corepack prepare pnpm@11.6.0 --activate
+
       - name: Setup pnpm
         run: pnpm --version
 
