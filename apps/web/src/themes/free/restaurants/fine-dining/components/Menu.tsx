@@ -2,6 +2,12 @@
  * LATTICE Theme #1 — Fine Dining
  * Menu component — courses with prices, token-driven cards.
  *
+ * Visual treatment:
+ *   - Sticky section headings with eyebrow ornament (gold hairline + label).
+ *   - Section heading is on a darker surface; courses on the surface.
+ *   - Hairline frame at the top of the whole menu (the reference's signature).
+ *   - Course rows use dotted leaders between name and price (print convention).
+ *
  * Skill 1 — CRDT
  *   Pure presentational. The course data is a prop (not fetched).
  *   No Yjs / useState for content.
@@ -70,20 +76,40 @@ export function FineDiningMenu({ data, initialTab }: FineDiningMenuProps) {
 
   const activePanel = data[active];
 
+  // Arrow-key support between tabs
+  const onTabKey = (e: React.KeyboardEvent<HTMLButtonElement>, idx: number) => {
+    if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+    e.preventDefault();
+    const dir = e.key === "ArrowRight" ? 1 : -1;
+    const next = (idx + dir + tabIds.length) % tabIds.length;
+    const nextId = tabIds[next];
+    if (!nextId) return;
+    setActive(nextId);
+    requestAnimationFrame(() => {
+      document.getElementById(`menu-tab-${nextId}`)?.focus();
+    });
+  };
+
   return (
     <section
       aria-label="Menu"
       data-theme-menu
-      className="bg-[color:var(--color-surface)] py-[var(--space-9)] md:py-[var(--space-10)]"
+      className="relative bg-[color:var(--color-surface)] py-[var(--space-10)] md:py-[var(--space-11)]"
     >
-      <div className="mx-auto w-full max-w-[1440px] px-[var(--space-5)] md:px-[var(--space-6)]">
+      {/* Hairline top frame (the reference's signature) */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[color:var(--color-border)] opacity-60"
+      />
+
+      <div className="mx-auto w-full max-w-[var(--container-max)] px-[var(--margin-mobile)] md:px-[var(--margin-desktop)]">
         {/* ─── Tab bar ───────────────────────────────────────────────── */}
         <div
           role="tablist"
           aria-label="Menu categories"
           className="flex flex-wrap items-center gap-[var(--space-2)] border-b border-[color:var(--color-border)] pb-[var(--space-4)]"
         >
-          {tabIds.map((tabId) => {
+          {tabIds.map((tabId, idx) => {
             const panel = data[tabId];
             if (!panel) return null;
             const isActive = tabId === active;
@@ -97,8 +123,9 @@ export function FineDiningMenu({ data, initialTab }: FineDiningMenuProps) {
                 id={`menu-tab-${tabId}`}
                 tabIndex={isActive ? 0 : -1}
                 onClick={() => setActive(tabId)}
+                onKeyDown={(e) => onTabKey(e, idx)}
                 className={[
-                  "min-h-[var(--space-7)] rounded-[var(--radius-sm)] px-[var(--space-4)] font-[family-name:var(--font-body)] text-[length:var(--space-4)] font-[var(--font-weight-body-medium)] transition-[background-color,color,box-shadow] duration-[var(--duration-base)] ease-[var(--easing-standard)] focus-visible:outline-2 focus-visible:outline-[color:var(--color-focus-ring)] focus-visible:outline-offset-2",
+                  "min-h-[var(--space-7)] rounded-[var(--radius-sm)] px-[var(--space-5)] font-[family-name:var(--font-body)] text-[length:var(--space-3)] font-[var(--font-weight-body-semibold)] uppercase tracking-[var(--letter-spacing-eyebrow)] transition-[background-color,color,box-shadow] duration-[var(--duration-base)] ease-[var(--easing-standard)] focus-visible:outline-2 focus-visible:outline-[color:var(--color-focus-ring)] focus-visible:outline-offset-2",
                   isActive
                     ? "bg-[color:var(--color-primary-500)] text-[color:var(--color-on-primary)] shadow-[var(--shadow-sm)]"
                     : "bg-transparent text-[color:var(--color-text)] hover:bg-[color:var(--color-surface-alt)]",
@@ -116,31 +143,35 @@ export function FineDiningMenu({ data, initialTab }: FineDiningMenuProps) {
             role="tabpanel"
             id={`menu-panel-${active}`}
             aria-labelledby={`menu-tab-${active}`}
-            className="mt-[var(--space-7)]"
+            className="mt-[var(--space-8)]"
           >
             {activePanel.preamble && (
-              <p className="mb-[var(--space-7)] max-w-2xl font-[family-name:var(--font-body)] text-[length:var(--space-4)] italic leading-[var(--line-height-body)] text-[color:var(--color-text-muted)]">
+              <p className="mb-[var(--space-8)] max-w-2xl font-[family-name:var(--font-display)] text-[length:clamp(1.25rem,2vw,1.5rem)] font-[var(--font-weight-display-italic)] italic leading-[var(--line-height-subhead)] text-[color:var(--color-primary-300)]">
                 {activePanel.preamble}
               </p>
             )}
 
-            <div className="flex flex-col gap-[var(--space-9)]">
+            <div className="flex flex-col gap-[var(--space-10)]">
               {activePanel.sections.map((section, sIdx) => (
                 <div
                   key={section.title}
-                  className="grid grid-cols-1 gap-[var(--space-5)] md:grid-cols-12"
+                  className="grid grid-cols-1 gap-[var(--space-6)] md:grid-cols-12"
                 >
-                  {/* Section heading */}
+                  {/* Section heading (sticky) */}
                   <div className="md:col-span-3">
                     <div className="sticky top-[var(--space-9)] flex flex-col gap-[var(--space-2)]">
-                      <p className="font-[family-name:var(--font-body)] text-[length:var(--space-3)] font-[var(--font-weight-body-semibold)] uppercase tracking-[var(--letter-spacing-eyebrow)] text-[color:var(--color-primary-500)]">
+                      <p className="inline-flex items-center gap-[var(--space-3)] font-[family-name:var(--font-body)] text-[length:var(--space-3)] font-[var(--font-weight-body-semibold)] uppercase tracking-[var(--letter-spacing-eyebrow)] text-[color:var(--color-primary-500)]">
+                        <span
+                          aria-hidden="true"
+                          className="block h-px w-6 bg-[color:var(--color-primary-500)]"
+                        />
                         {`0${sIdx + 1}`.slice(-2)}
                       </p>
                       <h3 className="font-[family-name:var(--font-display)] text-[length:var(--space-7)] font-[var(--font-weight-display)] leading-[var(--line-height-display)] tracking-[var(--letter-spacing-display)] text-[color:var(--color-text)]">
                         {section.title}
                       </h3>
                       {section.subtitle && (
-                        <p className="font-[family-name:var(--font-body)] text-[length:var(--space-4)] leading-[var(--line-height-body)] text-[color:var(--color-text-muted)]">
+                        <p className="font-[family-name:var(--font-body)] text-[length:var(--space-3)] italic leading-[var(--line-height-body)] text-[color:var(--color-text-muted)]">
                           {section.subtitle}
                         </p>
                       )}
@@ -149,51 +180,50 @@ export function FineDiningMenu({ data, initialTab }: FineDiningMenuProps) {
 
                   {/* Course list */}
                   <ul className="md:col-span-9 flex flex-col">
-                    {section.courses.map((course, cIdx) => (
+                    {section.courses.map((course) => (
                       <li
                         key={course.id}
-                        className={[
-                          "grid grid-cols-1 gap-[var(--space-2)] border-b border-[color:var(--color-border)] py-[var(--space-5)] sm:grid-cols-12",
-                          cIdx === 0 ? "border-t" : "",
-                        ].join(" ")}
+                        className="border-b border-[color:var(--color-border)] py-[var(--space-5)] first:border-t"
                       >
-                        <div className="sm:col-span-8">
-                          <h4 className="font-[family-name:var(--font-display)] text-[length:var(--space-5)] font-[var(--font-weight-display)] leading-[var(--line-height-subhead)] tracking-[var(--letter-spacing-display)] text-[color:var(--color-text)]">
-                            {course.name}
-                          </h4>
-                          <p className="mt-[var(--space-2)] font-[family-name:var(--font-body)] text-[length:var(--space-4)] leading-[var(--line-height-body)] text-[color:var(--color-text-muted)]">
-                            {course.description}
-                          </p>
-                          {course.tags && course.tags.length > 0 && (
-                            <ul className="mt-[var(--space-3)] flex flex-wrap items-center gap-[var(--space-2)]">
-                              {course.tags.map((tag) => (
-                                <li
-                                  key={tag}
-                                  className="inline-flex items-center gap-[var(--space-1)] rounded-[var(--radius-full)] border border-[color:var(--color-border)] bg-[color:var(--color-surface-alt)] px-[var(--space-3)] py-[var(--space-1)] font-[family-name:var(--font-body)] text-[length:var(--space-3)] font-[var(--font-weight-body-medium)] text-[color:var(--color-text-muted)]"
-                                >
-                                  <Leaf
-                                    className="h-[var(--space-2)] w-[var(--space-2)] text-[color:var(--color-success)]"
-                                    aria-hidden="true"
-                                  />
-                                  {TAG_LABEL[tag]}
-                                </li>
-                              ))}
-                            </ul>
-                          )}
-                          {course.pairing && (
-                            <p className="mt-[var(--space-3)] flex items-center gap-[var(--space-2)] font-[family-name:var(--font-body)] text-[length:var(--space-3)] italic text-[color:var(--color-accent)]">
-                              <Wine
-                                className="h-[var(--space-3)] w-[var(--space-3)]"
-                                aria-hidden="true"
-                              />
-                              {`Pair with: ${course.pairing}`}
+                        <div className="grid grid-cols-1 gap-[var(--space-2)] sm:grid-cols-12 sm:items-baseline">
+                          <div className="sm:col-span-8">
+                            <h4 className="font-[family-name:var(--font-display)] text-[length:var(--space-5)] font-[var(--font-weight-display)] leading-[var(--line-height-subhead)] tracking-[var(--letter-spacing-display)] text-[color:var(--color-text)]">
+                              {course.name}
+                            </h4>
+                            <p className="mt-[var(--space-2)] font-[family-name:var(--font-body)] text-[length:var(--space-4)] leading-[var(--line-height-body)] text-[color:var(--color-text-muted)]">
+                              {course.description}
                             </p>
-                          )}
-                        </div>
-                        <div className="sm:col-span-4 sm:text-right">
-                          <p className="font-[family-name:var(--font-display)] text-[length:var(--space-5)] font-[var(--font-weight-display)] leading-none tracking-[var(--letter-spacing-display)] text-[color:var(--color-primary-700)]">
-                            {course.price}
-                          </p>
+                            {course.tags && course.tags.length > 0 && (
+                              <ul className="mt-[var(--space-3)] flex flex-wrap items-center gap-[var(--space-2)]">
+                                {course.tags.map((tag) => (
+                                  <li
+                                    key={tag}
+                                    className="inline-flex items-center gap-[var(--space-1)] rounded-[var(--radius-full)] border border-[color:var(--color-border)] bg-[color:var(--color-surface-alt)] px-[var(--space-3)] py-[var(--space-1)] font-[family-name:var(--font-body)] text-[length:var(--space-3)] font-[var(--font-weight-body-medium)] text-[color:var(--color-text-muted)]"
+                                  >
+                                    <Leaf
+                                      className="h-[var(--space-2)] w-[var(--space-2)] text-[color:var(--color-success)]"
+                                      aria-hidden="true"
+                                    />
+                                    {TAG_LABEL[tag]}
+                                  </li>
+                                ))}
+                              </ul>
+                            )}
+                            {course.pairing && (
+                              <p className="mt-[var(--space-3)] flex items-center gap-[var(--space-2)] font-[family-name:var(--font-body)] text-[length:var(--space-3)] italic text-[color:var(--color-primary-300)]">
+                                <Wine
+                                  className="h-[var(--space-3)] w-[var(--space-3)]"
+                                  aria-hidden="true"
+                                />
+                                {`Pair with: ${course.pairing}`}
+                              </p>
+                            )}
+                          </div>
+                          <div className="sm:col-span-4 sm:text-right">
+                            <p className="font-[family-name:var(--font-display)] text-[length:var(--space-5)] font-[var(--font-weight-display)] italic leading-none tracking-[var(--letter-spacing-display)] text-[color:var(--color-primary-500)]">
+                              {course.price}
+                            </p>
+                          </div>
                         </div>
                       </li>
                     ))}
@@ -203,7 +233,7 @@ export function FineDiningMenu({ data, initialTab }: FineDiningMenuProps) {
             </div>
 
             {activePanel.colophon && (
-              <p className="mt-[var(--space-7)] flex items-center gap-[var(--space-2)] font-[family-name:var(--font-body)] text-[length:var(--space-3)] italic text-[color:var(--color-text-muted)]">
+              <p className="mt-[var(--space-8)] flex items-center gap-[var(--space-2)] font-[family-name:var(--font-display)] text-[length:var(--space-4)] font-[var(--font-weight-display-italic)] italic text-[color:var(--color-primary-300)]">
                 <Sparkles
                   className="h-[var(--space-3)] w-[var(--space-3)] text-[color:var(--color-primary-500)]"
                   aria-hidden="true"
@@ -214,10 +244,10 @@ export function FineDiningMenu({ data, initialTab }: FineDiningMenuProps) {
           </div>
         )}
 
-        {/* Tab focus-arrow keyboard support (left/right move between tabs) */}
+        {/* Tab focus-arrow keyboard support note */}
         <div
           aria-hidden="true"
-          className="mt-[var(--space-7)] flex items-center gap-[var(--space-2)] font-[family-name:var(--font-body)] text-[length:var(--space-3)] text-[color:var(--color-text-muted)]"
+          className="mt-[var(--space-9)] flex items-center gap-[var(--space-2)] border-t border-[color:var(--color-border)] pt-[var(--space-5)] font-[family-name:var(--font-body)] text-[length:var(--space-3)] italic text-[color:var(--color-text-muted)]"
         >
           <Flame
             className="h-[var(--space-3)] w-[var(--space-3)] text-[color:var(--color-primary-500)]"
