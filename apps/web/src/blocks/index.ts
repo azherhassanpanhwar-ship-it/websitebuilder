@@ -82,7 +82,9 @@ export const BLOCK_COMPONENTS = {
   cta: undefined,
   embed: undefined,
   custom: undefined,
-} as const satisfies Partial<Record<BlockType, React.ComponentType<BlockComponentProps> | undefined>>;
+} as const satisfies Partial<
+  Record<BlockType, React.ComponentType<BlockComponentProps> | undefined>
+>;
 
 /** Component type for any block in the table. */
 export type AnyBlockComponent = NonNullable<(typeof BLOCK_COMPONENTS)[BlockType]>;

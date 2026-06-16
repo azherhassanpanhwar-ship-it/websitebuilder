@@ -34,7 +34,7 @@ export const TokenRef = z
   .string()
   .regex(
     /^--[a-z][a-z0-9-]*$/,
-    "TokenRef must be a CSS custom property name (e.g. \"--color-primary-500\")",
+    'TokenRef must be a CSS custom property name (e.g. "--color-primary-500")',
   );
 export type TokenRef = z.infer<typeof TokenRef>;
 
@@ -195,12 +195,7 @@ export const HeaderStyle = z.enum([
 ]);
 export type HeaderStyle = z.infer<typeof HeaderStyle>;
 
-export const FooterStyle = z.enum([
-  "compact",
-  "expanded",
-  "multi-column",
-  "centered-minimal",
-]);
+export const FooterStyle = z.enum(["compact", "expanded", "multi-column", "centered-minimal"]);
 export type FooterStyle = z.infer<typeof FooterStyle>;
 
 export const HeroSettings = z
@@ -354,14 +349,7 @@ export const DesignStyle = z.enum([
 ]);
 export type DesignStyle = z.infer<typeof DesignStyle>;
 
-export const ColorMood = z.enum([
-  "warm",
-  "cool",
-  "neutral",
-  "vibrant",
-  "dark",
-  "pastel",
-]);
+export const ColorMood = z.enum(["warm", "cool", "neutral", "vibrant", "dark", "pastel"]);
 export type ColorMood = z.infer<typeof ColorMood>;
 
 export const ThemeMetadata = z
@@ -422,14 +410,7 @@ export type Theme = z.infer<typeof Theme>;
 //    (Task 2.26). The 10 design knobs from CLAUDE.md §6.5.
 // ─────────────────────────────────────────────────────────────────────────────
 
-export const PaletteName = z.enum([
-  "warm",
-  "luxury",
-  "cool",
-  "minimal",
-  "bold",
-  "organic",
-]);
+export const PaletteName = z.enum(["warm", "luxury", "cool", "minimal", "bold", "organic"]);
 export type PaletteName = z.infer<typeof PaletteName>;
 
 export const TypographyPairingName = z.enum([

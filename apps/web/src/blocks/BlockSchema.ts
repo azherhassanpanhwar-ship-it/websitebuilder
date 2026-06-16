@@ -102,15 +102,7 @@ export const BlockDefinitionSchema = z
     type: BlockType,
     displayName: z.string().min(1).max(64),
     category: z
-      .enum([
-        "layout",
-        "content",
-        "media",
-        "commerce",
-        "form",
-        "social",
-        "embed",
-      ])
+      .enum(["layout", "content", "media", "commerce", "form", "social", "embed"])
       .default("content"),
     description: z.string().max(280).optional(),
     /** Lucide-react icon name (Skill 5 — single icon system). */

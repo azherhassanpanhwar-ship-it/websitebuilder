@@ -13,12 +13,7 @@
 // We re-declare it locally as a string alias so this module has no cross-PR
 // dependency. The generator emits a string into the tokens doc, which is
 // all the consumer needs.
-export type SectionLayout =
-  | "full-bleed"
-  | "contained"
-  | "split"
-  | "grid"
-  | "stack";
+export type SectionLayout = "full-bleed" | "contained" | "split" | "grid" | "stack";
 
 export interface HeroPreset {
   pattern: string;
@@ -162,11 +157,7 @@ export const HEADER_PRESETS: Record<HeaderStyleKey, HeaderPreset> = {
 
 // ─── Footer styles (Design Law 5) ──────────────────────────────────────────
 
-export type FooterStyleKey =
-  | "compact"
-  | "expanded"
-  | "multi-column"
-  | "centered-minimal";
+export type FooterStyleKey = "compact" | "expanded" | "multi-column" | "centered-minimal";
 
 export const FOOTER_PRESETS: Record<FooterStyleKey, FooterPreset> = {
   "centered-minimal": {

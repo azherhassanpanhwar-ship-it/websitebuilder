@@ -155,9 +155,7 @@ export function switchTheme(
     for (let p = 0; p < pages.length; p++) {
       const page = pages.get(p);
       report.pagesProcessed++;
-      const sections = page.get("sections") as
-        | Y.Array<Y.Map<unknown>>
-        | undefined;
+      const sections = page.get("sections") as Y.Array<Y.Map<unknown>> | undefined;
       if (!sections) {
         report.errors.push(`Page ${String(page.get("id"))} has no sections array`);
         continue;
@@ -165,13 +163,9 @@ export function switchTheme(
       for (let s = 0; s < sections.length; s++) {
         const section = sections.get(s);
         report.sectionsProcessed++;
-        const blocks = section.get("blocks") as
-          | Y.Array<Y.Map<unknown>>
-          | undefined;
+        const blocks = section.get("blocks") as Y.Array<Y.Map<unknown>> | undefined;
         if (!blocks) {
-          report.errors.push(
-            `Section ${String(section.get("id"))} has no blocks array`,
-          );
+          report.errors.push(`Section ${String(section.get("id"))} has no blocks array`);
           continue;
         }
         for (let b = 0; b < blocks.length; b++) {
@@ -276,8 +270,7 @@ function themeToSnapshot(theme: ThemeLike): Record<string, unknown> {
  * branching or to appear in any persisted value.
  */
 function nowMonotonic(): number {
-  const perf = (globalThis as { performance?: { now?: () => number } })
-    .performance;
+  const perf = (globalThis as { performance?: { now?: () => number } }).performance;
   if (perf && typeof perf.now === "function") return perf.now();
   return 0;
 }

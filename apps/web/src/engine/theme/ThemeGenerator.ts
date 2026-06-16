@@ -96,10 +96,7 @@ export interface TokensDoc {
   };
   space: Record<string, { $value: string; $type: "dimension" }>;
   radius: Record<string, { $value: string; $type: "dimension" }>;
-  shadow: Record<
-    string,
-    { $value: string; $type: "shadow" }
-  >;
+  shadow: Record<string, { $value: string; $type: "shadow" }>;
   color: {
     primary: { "50": string; "100": string; "500": string; "900": string };
     onPrimary: string;
@@ -169,8 +166,7 @@ export function generateTheme(
 
   // 1. Look up the deterministic data tables.
   const palette: ColorPalette = PALETTES[params.palette];
-  const typography: TypographyPairing =
-    TYPOGRAPHY_PAIRINGS[params.typographyPairing];
+  const typography: TypographyPairing = TYPOGRAPHY_PAIRINGS[params.typographyPairing];
   const spacingMultiplier = SPACING_SCALE_MULTIPLIERS[params.spacingScale];
   const scaledSpace = scaleSpace(spacingMultiplier);
   const radiusScale = RADIUS_SCALES[params.cornerRadius];
@@ -212,14 +208,8 @@ interface BuildTokensInput {
   palette: ColorPalette;
   typography: TypographyPairing;
   scaledSpace: Record<string, string>;
-  radiusScale: Record<
-    "none" | "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "full",
-    string
-  >;
-  shadowScale: Record<
-    "none" | "xs" | "sm" | "md" | "lg" | "xl" | "colored" | "inner",
-    string
-  >;
+  radiusScale: Record<"none" | "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "full", string>;
+  shadowScale: Record<"none" | "xs" | "sm" | "md" | "lg" | "xl" | "colored" | "inner", string>;
   animationPreset: AnimationPreset;
   heroPreset: HeroPreset;
   headerPreset: HeaderPreset;
@@ -832,10 +822,4 @@ export { BASE_SPACE_PX };
 // Pull in zod for re-export so consumers don't need a second import.
 export { z };
 // Re-export the parameter and result types for ergonomic consumers.
-export type {
-  PaletteName,
-  TypographyPairingName,
-  RadiusFamily,
-  ShadowStyle,
-  AnimationPresetName,
-};
+export type { PaletteName, TypographyPairingName, RadiusFamily, ShadowStyle, AnimationPresetName };

@@ -39,14 +39,7 @@ const FIT: Record<NonNullable<ImageBlockProps["fit"]>, string> = {
 };
 
 export function ImageBlock(props: ImageBlockProps) {
-  const {
-    src,
-    alt = "",
-    aspectRatio = "16/9",
-    fit = "cover",
-    framed = false,
-    caption,
-  } = props;
+  const { src, alt = "", aspectRatio = "16/9", fit = "cover", framed = false, caption } = props;
 
   return (
     <figure className="py-[var(--space-4)]">

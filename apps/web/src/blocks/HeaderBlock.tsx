@@ -21,6 +21,7 @@
  */
 
 import * as React from "react";
+import Link from "next/link";
 import { Menu, X, ChevronRight } from "lucide-react";
 
 export interface NavItem {
@@ -39,12 +40,7 @@ export interface HeaderBlockProps {
   ctaLabel?: string;
   ctaHref?: string;
   /** Visual style — drives whether the header is translucent over a hero. */
-  style?:
-    | "transparent-over-hero"
-    | "solid-sticky"
-    | "centered-logo"
-    | "split-nav"
-    | "minimal-bar";
+  style?: "transparent-over-hero" | "solid-sticky" | "centered-logo" | "split-nav" | "minimal-bar";
 }
 
 const STYLE_CLASSES: Record<NonNullable<HeaderBlockProps["style"]>, string> = {
@@ -52,12 +48,9 @@ const STYLE_CLASSES: Record<NonNullable<HeaderBlockProps["style"]>, string> = {
     "bg-[color:var(--color-surface-translucent)] backdrop-blur-md text-[color:var(--color-text)]",
   "solid-sticky":
     "bg-[color:var(--color-surface)] text-[color:var(--color-text)] border-b border-[color:var(--color-border)]",
-  "centered-logo":
-    "bg-[color:var(--color-surface)] text-[color:var(--color-text)]",
-  "split-nav":
-    "bg-[color:var(--color-surface)] text-[color:var(--color-text)]",
-  "minimal-bar":
-    "bg-[color:var(--color-surface-alt)] text-[color:var(--color-text)]",
+  "centered-logo": "bg-[color:var(--color-surface)] text-[color:var(--color-text)]",
+  "split-nav": "bg-[color:var(--color-surface)] text-[color:var(--color-text)]",
+  "minimal-bar": "bg-[color:var(--color-surface-alt)] text-[color:var(--color-text)]",
 };
 
 export function HeaderBlock(props: HeaderBlockProps) {
@@ -76,15 +69,11 @@ export function HeaderBlock(props: HeaderBlockProps) {
 
   return (
     <header
-      className={[
-        "sticky top-0 z-50 w-full",
-        "h-[var(--space-8)]",
-        STYLE_CLASSES[style],
-      ].join(" ")}
+      className={["sticky top-0 z-50 w-full", "h-[var(--space-8)]", STYLE_CLASSES[style]].join(" ")}
     >
       <div className="mx-auto flex h-full w-full max-w-[1440px] items-center justify-between gap-[var(--space-6)] px-[var(--space-6)]">
         {/* Logo */}
-        <a
+        <Link
           href="/"
           aria-label={logoAlt}
           className="flex items-center gap-[var(--space-2)] font-[family-name:var(--font-display)] text-[length:var(--space-5)] font-bold tracking-tight"
@@ -95,11 +84,14 @@ export function HeaderBlock(props: HeaderBlockProps) {
           ) : (
             <span>{logo}</span>
           )}
-        </a>
+        </Link>
 
         {/* Desktop nav */}
         {navItems.length > 0 ? (
-          <nav className="hidden flex-1 items-center justify-center gap-[var(--space-6)] md:flex" aria-label="Primary">
+          <nav
+            className="hidden flex-1 items-center justify-center gap-[var(--space-6)] md:flex"
+            aria-label="Primary"
+          >
             {navItems.map((item) => (
               <a
                 key={item.href}
@@ -144,7 +136,11 @@ export function HeaderBlock(props: HeaderBlockProps) {
             className="inline-flex h-[var(--space-9)] w-[var(--space-9)] items-center justify-center rounded-[var(--radius-md)] md:hidden"
             onClick={() => setDrawerOpen((v) => !v)}
           >
-            {drawerOpen ? <X className="h-[var(--space-5)] w-[var(--space-5)]" /> : <Menu className="h-[var(--space-5)] w-[var(--space-5)]" />}
+            {drawerOpen ? (
+              <X className="h-[var(--space-5)] w-[var(--space-5)]" />
+            ) : (
+              <Menu className="h-[var(--space-5)] w-[var(--space-5)]" />
+            )}
           </button>
         </div>
       </div>
@@ -157,7 +153,10 @@ export function HeaderBlock(props: HeaderBlockProps) {
           aria-modal="true"
           aria-label="Mobile menu"
         >
-          <nav className="flex flex-col gap-[var(--space-2)] p-[var(--space-4)]" aria-label="Mobile primary">
+          <nav
+            className="flex flex-col gap-[var(--space-2)] p-[var(--space-4)]"
+            aria-label="Mobile primary"
+          >
             {navItems.map((item) => (
               <a
                 key={item.href}

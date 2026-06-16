@@ -21,6 +21,8 @@ lattice/
 │   ├── tokens/              # W3C Design Tokens — source of truth (Task 1.18)
 │   └── themes/              # Theme bundles (P3+)
 ├── packages/                # Shared packages (ui-kit, config, tsconfig)
+├── docker/                  # docker-compose init scripts (Postgres extensions)
+├── docker-compose.yml       # Local Postgres (54322) + Redis (6379)
 ├── docs/                    # 204-task implementation plan
 ├── .env.example             # Required env vars
 ├── .husky/                  # Pre-commit hooks
@@ -44,22 +46,47 @@ pnpm install
 # 2. Copy env template and fill in real values
 cp .env.example .env.local
 
-# 3. Start the dev server
+# 3. Start the local stack (Postgres on :54322, Redis on :6379)
+docker compose up -d
+
+# 4. Start the dev server
 pnpm dev
 ```
 
 `pnpm dev` runs `next dev` inside `apps/web`. Open <http://localhost:3000>.
 
+### Local stack (Docker Compose)
+
+| Service  | Port  | Image                | Notes                                                               |
+| -------- | ----- | -------------------- | ------------------------------------------------------------------- |
+| postgres | 54322 | `postgres:16-alpine` | Port matches `DATABASE_URL` in `.env.example` (Supabase-CLI style). |
+| redis    | 6379  | `redis:7-alpine`     | AOF persistence, healthcheck-gated. Reserved for Phase 2+ features. |
+
+Stop and remove the stack with `docker compose down`. Wipe the data volumes with `docker compose down -v`.
+
 ### Workspace-wide commands
 
-| Command | What it does |
-| --- | --- |
-| `pnpm dev` | Start `apps/web` in dev mode |
-| `pnpm build` | Build every workspace package |
-| `pnpm lint` | Lint every workspace package |
-| `pnpm typecheck` | TypeScript check every workspace package |
-| `pnpm format` | Prettier-write across the repo |
-| `pnpm format:check` | Prettier-check (used in CI) |
+| Command              | What it does                             |
+| -------------------- | ---------------------------------------- |
+| `pnpm dev`           | Start `apps/web` in dev mode             |
+| `pnpm build`         | Build every workspace package            |
+| `pnpm lint`          | Lint every workspace package             |
+| `pnpm typecheck`     | TypeScript check every workspace package |
+| `pnpm test`          | Run Vitest once (CI mode)                |
+| `pnpm test:watch`    | Vitest in watch mode                     |
+| `pnpm test:ui`       | Vitest with the interactive UI           |
+| `pnpm test:coverage` | Vitest with V8 coverage report           |
+| `pnpm format`        | Prettier-write across the repo           |
+| `pnpm format:check`  | Prettier-check (used in CI)              |
+
+### Per-app test commands (`apps/web`)
+
+| Command                                    | What it does            |
+| ------------------------------------------ | ----------------------- |
+| `pnpm --filter @lattice/web test`          | Single Vitest run       |
+| `pnpm --filter @lattice/web test:watch`    | Vitest watch mode       |
+| `pnpm --filter @lattice/web test:ui`       | Vitest interactive UI   |
+| `pnpm --filter @lattice/web test:coverage` | Vitest with V8 coverage |
 
 ### Importing shared libraries from `apps/web`
 
@@ -91,3 +118,7 @@ See [`.env.example`](./.env.example) for the full list (Database, WebSocket, Pex
 ## Pre-commit
 
 Husky runs `lint-staged` on every commit: Prettier + ESLint with `--fix --max-warnings 0`. Skip locally with `git commit --no-verify` (not recommended).
+
+## CI
+
+`.github/workflows/ci.yml` runs `pnpm install` → `lint` → `typecheck` → `test` → `build` on every push and PR to `main`. Same gate as a maintainer runs locally.

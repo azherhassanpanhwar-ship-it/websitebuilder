@@ -46,6 +46,9 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# ─── Playwright MCP cache (debug artifacts) ──────────────────────────────
+.playwright-mcp/
+
 # ─── Editor / OS ────────────────────────────────────────────────────────────
 .idea
 .vscode/*

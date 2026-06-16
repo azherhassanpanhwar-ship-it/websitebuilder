@@ -97,10 +97,7 @@ export function EditorCanvas({ doc, fallback, className = "w-full" }: EditorCanv
   const [tick, setTick] = React.useState(0);
   // Memoize the Y.Array so the useEffect dependency is stable across
   // renders (otherwise observe/unobserve churns on every render).
-  const pages = React.useMemo(
-    () => doc.getArray<Y.Map<unknown>>(PAGES_KEY),
-    [doc],
-  );
+  const pages = React.useMemo(() => doc.getArray<Y.Map<unknown>>(PAGES_KEY), [doc]);
 
   React.useEffect(() => {
     const handler = () => setTick((t) => t + 1);
@@ -131,9 +128,7 @@ function PageView({ page }: PageViewProps) {
   const id = String(page.get(PAGE_KEYS.id) ?? "");
   const route = String(page.get(PAGE_KEYS.route) ?? "/");
   const title = String(page.get(PAGE_KEYS.title) ?? "(untitled)");
-  const sections = page.get(PAGE_KEYS.sections) as
-    | Y.Array<Y.Map<unknown>>
-    | undefined;
+  const sections = page.get(PAGE_KEYS.sections) as Y.Array<Y.Map<unknown>> | undefined;
 
   return (
     <article
@@ -144,12 +139,11 @@ function PageView({ page }: PageViewProps) {
       className="flex w-full flex-col"
     >
       {sections
-        ? sections.toArray().map((section) => (
-            <SectionView
-              key={String(section.get(SECTION_KEYS.id))}
-              section={section}
-            />
-          ))
+        ? sections
+            .toArray()
+            .map((section) => (
+              <SectionView key={String(section.get(SECTION_KEYS.id))} section={section} />
+            ))
         : null}
     </article>
   );
@@ -165,9 +159,7 @@ function SectionView({ section }: SectionViewProps) {
   const id = String(section.get(SECTION_KEYS.id) ?? "");
   const name = String(section.get(SECTION_KEYS.name) ?? "");
   const layout = (section.get(SECTION_KEYS.layout) as string) ?? "contained";
-  const blocks = section.get(SECTION_KEYS.blocks) as
-    | Y.Array<Y.Map<unknown>>
-    | undefined;
+  const blocks = section.get(SECTION_KEYS.blocks) as Y.Array<Y.Map<unknown>> | undefined;
 
   return (
     <section
@@ -178,12 +170,9 @@ function SectionView({ section }: SectionViewProps) {
     >
       <div className={layoutInnerClass(layout)}>
         {blocks
-          ? blocks.toArray().map((block) => (
-              <BlockView
-                key={String(block.get(BLOCK_KEYS.id))}
-                block={block}
-              />
-            ))
+          ? blocks
+              .toArray()
+              .map((block) => <BlockView key={String(block.get(BLOCK_KEYS.id))} block={block} />)
           : null}
       </div>
     </section>
@@ -203,13 +192,7 @@ function BlockView({ block }: BlockViewProps) {
   const content = block.get(BLOCK_KEYS.content) as Y.Text | undefined;
 
   if (!type) {
-    return (
-      <UnknownBlock
-        id={id}
-        reason="missing-type"
-        message="This block has no `type` field."
-      />
-    );
+    return <UnknownBlock id={id} reason="missing-type" message="This block has no `type` field." />;
   }
 
   const Component = BLOCK_COMPONENTS[type];
@@ -246,15 +229,7 @@ function BlockView({ block }: BlockViewProps) {
 
 // ─── Unknown block fallback ─────────────────────────────────────────────
 
-function UnknownBlock({
-  id,
-  reason,
-  message,
-}: {
-  id: string;
-  reason: string;
-  message: string;
-}) {
+function UnknownBlock({ id, reason, message }: { id: string; reason: string; message: string }) {
   return (
     <div
       data-block-id={id}
@@ -269,9 +244,7 @@ function UnknownBlock({
       <span className="text-[length:var(--space-3)] font-semibold uppercase tracking-wider text-[color:var(--color-text-muted)]">
         Unsupported block
       </span>
-      <span className="text-[length:var(--space-4)] text-[color:var(--color-text)]">
-        {message}
-      </span>
+      <span className="text-[length:var(--space-4)] text-[color:var(--color-text)]">{message}</span>
     </div>
   );
 }

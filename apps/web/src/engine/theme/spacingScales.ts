@@ -10,10 +10,7 @@
  * remains deterministic.
  */
 
-export const SPACING_SCALE_MULTIPLIERS: Record<
-  "compact" | "comfortable" | "spacious",
-  number
-> = {
+export const SPACING_SCALE_MULTIPLIERS: Record<"compact" | "comfortable" | "spacious", number> = {
   compact: 0.875,
   comfortable: 1.0,
   spacious: 1.25,

@@ -1,0 +1,105 @@
+# ────────────────────────────────────────────────────────────────────────────
+# LATTICE local development stack
+#
+# Mirrors the .env.example defaults so `pnpm dev` works out-of-the-box once
+# the stack is up. Bring it up with:
+#
+#     docker compose up -d
+#
+# Service ports intentionally match the .env.example:
+#   - postgres: 54322  →  DATABASE_URL=postgresql://postgres:postgres@localhost:54322/postgres
+#   - redis:    6379   →  REDIS_URL=redis://localhost:6379
+#   - realtime: 1234   →  NEXT_PUBLIC_WS_URL=ws://localhost:1234
+#
+# Health checks gate the `ready` aggregator so a dependent `pnpm dev` step
+# can `docker compose run --rm wait-for-db` instead of racing the boot.
+# ────────────────────────────────────────────────────────────────────────────
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: lattice-postgres
+    restart: unless-stopped
+    # Port 54322 (not 5432) — matches the Supabase-CLI convention baked into
+    # .env.example. Keeps the host's default Postgres free for other tools.
+    ports:
+      - "54322:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    volumes:
+      - lattice-postgres-data:/var/lib/postgresql/data
+      # Init scripts run on first boot only (alphabetical order).
+      - ./docker/postgres/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d postgres"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 5s
+
+  redis:
+    image: redis:7-alpine
+    container_name: lattice-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    # redis:7-alpine ships with a default config that's already prod-friendly
+    # (appendonly on, protected-mode on). Persist with RDB snapshots so dev
+    # sessions survive a container restart.
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - lattice-redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 3s
+
+  # Realtime server (Task 1.5) — y-websocket + Supabase JWT auth.
+  # Built from ./docker/realtime/Dockerfile, which copies apps/realtime
+  # and installs its pnpm workspace deps.
+  realtime:
+    build:
+      context: .
+      dockerfile: docker/realtime/Dockerfile
+    container_name: lattice-realtime
+    restart: unless-stopped
+    ports:
+      - "1234:1234"
+    environment:
+      # Same JWT secret the Supabase project uses. In dev, the
+      # `supabase start` CLI prints this; paste it into .env.local.
+      SUPABASE_JWT_SECRET: ${SUPABASE_JWT_SECRET:-dev-only-not-for-production-replace-me-12345678}
+      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS:-http://localhost:3000,http://127.0.0.1:3000}
+      HOST: 0.0.0.0
+      PORT: "1234"
+    # The Dockerfile installs deps + builds. We `pnpm dev` (tsx watch)
+    # in the container so file changes are picked up without rebuilding.
+    command: ["pnpm", "--filter", "@lattice/realtime", "dev"]
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "--quiet", "http://localhost:1234/health"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 10s
+
+  # No service depends on this directly — it exists so a CI runner or a
+  # developer can `docker compose run --rm wait-for-db pnpm dev` and have the
+  # command block until the DB is accepting connections.
+  wait-for-db:
+    image: postgres:16-alpine
+    container_name: lattice-wait-for-db
+    profiles: ["tools"] # not started by `docker compose up` — invoked manually
+    depends_on:
+      postgres:
+        condition: service_healthy
+    entrypoint: ["sh", "-c", "echo 'postgres is ready' && exit 0"]
+
+volumes:
+  lattice-postgres-data:
+    name: lattice-postgres-data
+  lattice-redis-data:
+    name: lattice-redis-data

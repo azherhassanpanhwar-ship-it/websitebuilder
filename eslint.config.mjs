@@ -6,13 +6,19 @@ const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
   globalIgnores([
-    ".next/**",
-    "out/**",
-    "build/**",
-    "dist/**",
-    "node_modules/**",
+    // `**/` prefix matches the directory at any depth — ESLint 9's
+    // globalIgnores applies patterns as minimatch globs, but a leading
+    // dot directory like `.next` is only reliably matched when anchored
+    // with `**/`. This way the ignore works whether eslint runs from the
+    // monorepo root or from `apps/web/`.
+    "**/.next/**",
+    "**/out/**",
+    "**/build/**",
+    "**/dist/**",
+    "**/node_modules/**",
     "**/next-env.d.ts",
-    "pnpm-lock.yaml",
+    "**/tsconfig.tsbuildinfo",
+    "**/pnpm-lock.yaml",
   ]),
 ]);
 

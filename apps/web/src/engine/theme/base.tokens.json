@@ -13,39 +13,51 @@
   },
 
   "space": {
-    "0":  { "$value": "0px",     "$type": "dimension" },
-    "1":  { "$value": "4px",     "$type": "dimension" },
-    "2":  { "$value": "8px",     "$type": "dimension" },
-    "3":  { "$value": "12px",    "$type": "dimension" },
-    "4":  { "$value": "16px",    "$type": "dimension" },
-    "5":  { "$value": "24px",    "$type": "dimension" },
-    "6":  { "$value": "32px",    "$type": "dimension" },
-    "7":  { "$value": "48px",    "$type": "dimension" },
-    "8":  { "$value": "64px",    "$type": "dimension" },
-    "9":  { "$value": "96px",    "$type": "dimension" },
-    "10": { "$value": "128px",   "$type": "dimension" },
-    "11": { "$value": "160px",   "$type": "dimension" }
+    "0": { "$value": "0px", "$type": "dimension" },
+    "1": { "$value": "4px", "$type": "dimension" },
+    "2": { "$value": "8px", "$type": "dimension" },
+    "3": { "$value": "12px", "$type": "dimension" },
+    "4": { "$value": "16px", "$type": "dimension" },
+    "5": { "$value": "24px", "$type": "dimension" },
+    "6": { "$value": "32px", "$type": "dimension" },
+    "7": { "$value": "48px", "$type": "dimension" },
+    "8": { "$value": "64px", "$type": "dimension" },
+    "9": { "$value": "96px", "$type": "dimension" },
+    "10": { "$value": "128px", "$type": "dimension" },
+    "11": { "$value": "160px", "$type": "dimension" }
   },
 
   "radius": {
-    "none":  { "$value": "0px",      "$type": "dimension" },
-    "xs":    { "$value": "2px",      "$type": "dimension" },
-    "sm":    { "$value": "4px",      "$type": "dimension" },
-    "md":    { "$value": "8px",      "$type": "dimension" },
-    "lg":    { "$value": "12px",     "$type": "dimension" },
-    "xl":    { "$value": "16px",     "$type": "dimension" },
-    "2xl":   { "$value": "24px",     "$type": "dimension" },
-    "full":  { "$value": "9999px",   "$type": "dimension" }
+    "none": { "$value": "0px", "$type": "dimension" },
+    "xs": { "$value": "2px", "$type": "dimension" },
+    "sm": { "$value": "4px", "$type": "dimension" },
+    "md": { "$value": "8px", "$type": "dimension" },
+    "lg": { "$value": "12px", "$type": "dimension" },
+    "xl": { "$value": "16px", "$type": "dimension" },
+    "2xl": { "$value": "24px", "$type": "dimension" },
+    "full": { "$value": "9999px", "$type": "dimension" }
   },
 
   "shadow": {
-    "none":     { "$value": "none",                                                              "$type": "shadow" },
-    "xs":       { "$value": "0 1px 2px rgba(0, 0, 0, 0.05)",                                     "$type": "shadow" },
-    "sm":       { "$value": "0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06)",       "$type": "shadow" },
-    "md":       { "$value": "0 4px 6px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.06)",       "$type": "shadow" },
-    "lg":       { "$value": "0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05)",      "$type": "shadow" },
-    "xl":       { "$value": "0 20px 25px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.04)",    "$type": "shadow" },
-    "colored":  { "$value": "0 8px 24px rgba(0, 0, 0, 0.25)",                                    "$type": "shadow" },
-    "inner":    { "$value": "inset 0 2px 4px rgba(0, 0, 0, 0.06)",                                "$type": "shadow" }
+    "none": { "$value": "none", "$type": "shadow" },
+    "xs": { "$value": "0 1px 2px rgba(0, 0, 0, 0.05)", "$type": "shadow" },
+    "sm": {
+      "$value": "0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06)",
+      "$type": "shadow"
+    },
+    "md": {
+      "$value": "0 4px 6px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.06)",
+      "$type": "shadow"
+    },
+    "lg": {
+      "$value": "0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05)",
+      "$type": "shadow"
+    },
+    "xl": {
+      "$value": "0 20px 25px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.04)",
+      "$type": "shadow"
+    },
+    "colored": { "$value": "0 8px 24px rgba(0, 0, 0, 0.25)", "$type": "shadow" },
+    "inner": { "$value": "inset 0 2px 4px rgba(0, 0, 0, 0.06)", "$type": "shadow" }
   }
 }
