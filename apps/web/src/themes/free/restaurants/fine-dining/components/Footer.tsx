@@ -19,6 +19,8 @@
  *   hint. Single icon system.
  */
 
+"use client";
+
 import * as React from "react";
 import { Send, Globe, MapPin, Phone, Mail } from "lucide-react";
 

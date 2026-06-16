@@ -29,11 +29,10 @@ import { ArrowRight, CalendarDays } from "lucide-react";
 
 export interface FineDiningHeroProps {
   /**
-   * The hero background image URL. Pexels photo 17057034 (Matheus
-   * Bertelli, "Sophisticated table setup with glassware and napkins
-   * for fine dining experience") is the canonical Fine Dining
-   * default — warm tan average color that pairs with the deep-gold
-   * palette per Design Law 1.
+   * The hero background image URL. Defaults to the locally-hosted
+   * `/themes/fine-dining/hero.jpg` (Pexels photo 17057034 by
+   * Matheus Bertelli, downloaded on install to avoid third-party
+   * cookie + cross-origin LCP penalties).
    */
   imageUrl?: string;
   /** Eyebrow text above the headline (uppercase, wide tracking). */
@@ -52,8 +51,7 @@ export interface FineDiningHeroProps {
   secondaryCtaHref?: string;
 }
 
-const DEFAULT_IMAGE =
-  "https://images.pexels.com/photos/17057034/pexels-photo-17057034.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200";
+const DEFAULT_IMAGE = "/themes/fine-dining/hero.jpg";
 
 export function FineDiningHero({
   imageUrl = DEFAULT_IMAGE,
@@ -69,18 +67,30 @@ export function FineDiningHero({
     <section
       aria-label="Fine Dining hero"
       data-theme-hero
-      className="relative w-full overflow-hidden bg-[color:var(--color-surface-dark)]"
-      style={{
-        minHeight: "var(--space-11)", // 100vh on desktop
-      }}
+      className="relative w-full overflow-hidden bg-[color:var(--color-surface-dark)] min-h-[85vh] md:min-h-screen"
     >
-      {/* ─── Full-bleed background image (Design Law 4) ─────────────── */}
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 bg-cover"
+      {/* ─── Full-bleed image (Design Law 4) ────────────────────── */}
+      {/* Plain <img> with fetchPriority="high" + sizes="100vw".
+          The `bg-[color:var(--color-surface-dark)]` class on the
+          <img> gives the LCP element a paint-able background the
+          instant it's parsed — this collapses the "Render Delay"
+          phase of the LCP waterfall because the browser has
+          something to commit before the JPEG fully decodes. */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={imageUrl}
+        alt=""
+        role="presentation"
+        decoding="async"
+        loading="eager"
+        fetchPriority="high"
+        sizes="100vw"
+        className="absolute inset-0 h-full w-full bg-[color:var(--color-surface-dark)] object-cover object-[center_30%] md:object-[center_30%]"
         style={{
-          backgroundImage: `url(${JSON.stringify(imageUrl)})`,
-          backgroundPosition: "center 30%", // object-position top-ish on desktop
+          // Tailwind's object-[center_30%] handles both breakpoints;
+          // the inline style below provides a fallback for older
+          // browsers that don't parse arbitrary object-position.
+          objectPosition: "center 30%",
         }}
       />
 
@@ -131,15 +141,6 @@ export function FineDiningHero({
           </div>
         </div>
       </div>
-
-      {/* ─── Mobile object-position override (Design Law 4 "never center-crop on mobile") ── */}
-      <style>{`
-        @media (max-width: 767px) {
-          [data-theme-hero] [aria-hidden="true"]:first-of-type {
-            background-position: center 25% !important;
-          }
-        }
-      `}</style>
     </section>
   );
 }

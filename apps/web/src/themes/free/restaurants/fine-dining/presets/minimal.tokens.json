@@ -1,0 +1,80 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "$description": "LATTICE Theme #1 — Fine Dining · MINIMAL preset. Token overrides only. Restraint: a softer, more cream-leaning gold; lighter, less-visible shadows; a tighter display tracking. Use this when the Fine Dining brand needs to read as light, quiet, almost gallery-like — a long lunch, a tea service, a private tasting rather than a black-tie dinner.",
+  "$metadata": {
+    "preset": "minimal",
+    "base_theme": "fine-dining",
+    "design_intent": "More cream, restrained gold, lighter shadows. Tea service / long lunch / private tasting variant.",
+    "see": ["../tokens.json (base)", "CLAUDE.md §6 quality bar (3 presets required)"]
+  },
+
+  "color": {
+    "primary": {
+      "200": { "$value": "#EFE0BE", "$type": "color", "$description": "Lighter cream-gold tint" },
+      "300": { "$value": "#DCC998", "$type": "color", "$description": "Softer mid-tone" },
+      "500": {
+        "$value": "#D4BC7A",
+        "$type": "color",
+        "$description": "Restrained hero gold — closer to the 300 tone, never loud"
+      },
+      "700": { "$value": "#A89255", "$type": "color", "$description": "Softened hover/pressed" }
+    },
+    "surface": {
+      "$value": "#FFFAF0",
+      "$type": "color",
+      "$description": "Brightest cream — almost paper-white"
+    },
+    "surfaceAlt": {
+      "$value": "#F6EEDD",
+      "$type": "color",
+      "$description": "Faint warm tint for cards"
+    },
+    "border": { "$value": "#E5DCC8", "$type": "color", "$description": "Softer hairline" },
+    "focusRing": { "$value": "#A89255", "$type": "color", "$description": "Restrained focus ring" }
+  },
+
+  "shadow": {
+    "xs": {
+      "$value": "0 1px 1px rgba(31, 26, 18, 0.03)",
+      "$type": "shadow",
+      "$description": "Faintest hairline"
+    },
+    "sm": {
+      "$value": "0 1px 2px rgba(31, 26, 18, 0.04)",
+      "$type": "shadow",
+      "$description": "Soft lift — barely there"
+    },
+    "md": {
+      "$value": "0 2px 4px rgba(31, 26, 18, 0.04)",
+      "$type": "shadow",
+      "$description": "Card default — almost flat"
+    },
+    "colored": {
+      "$value": "0 4px 12px rgba(212, 188, 122, 0.12)",
+      "$type": "shadow",
+      "$description": "Whisper of gold around primary"
+    }
+  },
+
+  "letterSpacing": {
+    "display": {
+      "$value": "0.01em",
+      "$type": "dimension",
+      "$description": "Slightly more air in display — the open, gallery feel"
+    }
+  },
+
+  "radius": {
+    "sm": {
+      "$value": "2px",
+      "$type": "dimension",
+      "$description": "Square shape reasserted for the minimal variant"
+    },
+    "md": { "$value": "2px", "$type": "dimension", "$description": "Square shape reasserted" },
+    "lg": {
+      "$value": "3px",
+      "$type": "dimension",
+      "$description": "Slight softening for panels only"
+    }
+  }
+}
