@@ -12,36 +12,46 @@
     "reservations",
     "sommelier",
     "small-plate",
-    "candle-lit"
+    "candle-lit",
+    "theater-of-dining"
   ],
   "target_industry": "restaurants",
   "design_style": "luxury",
-  "color_mood": "warm",
+  "color_mood": "dark-gold",
   "hero_pattern": "full-bleed-image",
   "density": "spacious",
-  "version": "1.0.0",
-  "semver": "1.0.0",
+  "version": "2.0.0",
+  "semver": "2.0.0",
   "kebab_case_slug": "fine-dining",
   "wcag_level": "AA",
   "preview": {
     "screenshot": "preview.png",
     "hero_image": "pexels-17057034.jpg",
-    "color_palette": ["#C9A84C", "#FAF6EE", "#2B2419", "#722F37", "#1F1A12"],
+    "color_palette": ["#E9C176", "#E5E2E1", "#131313", "#0E0E0E", "#775A19"],
     "typography": {
-      "display": "Cormorant Garamond",
-      "body": "Inter"
+      "display": "Bodoni Moda",
+      "body": "Hanken Grotesk"
     }
   },
   "design_laws_applied": [
-    "Design Law 1 — Restaurants / Fine Dining (warm neutrals + deep gold)",
-    "Design Law 2 — Luxury / Fine Dining typography (Cormorant Garamond + Inter)",
+    "Design Law 1 — Restaurants / Fine Dining (dark + saturated gold)",
+    "Design Law 2 — Luxury typography (Bodoni Moda display + Hanken Grotesk body)",
     "Design Law 3 — Spacious density (luxury)",
-    "Design Law 4 — Full-bleed-image hero pattern",
-    "Design Law 5 — Sticky transparent header, mobile hamburger at md, 44px tap targets",
-    "Design Law 6 — Subtle animation (no continuous loops)",
-    "Design Law 7 — Sharp radius (0–2px)",
+    "Design Law 4 — Full-bleed-image hero with mouse parallax (4%) + cinematic gradient + hairline frame + scroll-cue",
+    "Design Law 5 — Sticky transparent header with scroll progress hairline, mobile hamburger at md, 44px tap targets",
+    "Design Law 6 — Subtle animation (no continuous loops, prefers-reduced-motion respected)",
+    "Design Law 7 — Sharp radius (0–4px) — Design Law 7 sharp category",
     "Design Law 8 — Subtle shadow (xs–md)",
+    "Design Law 9 — Responsive (base / sm / md / lg / xl) with container max 1280px",
     "Design Law 10 — Quality self-check pre-merge"
+  ],
+  "signature_elements": [
+    "Hairline frame (top + bottom) on hero, footer, and section dividers",
+    "Eyebrow ornament — gold hairline (8px) + uppercase label",
+    "Italic Bodoni Moda accent words inside serif headlines",
+    "Mouse parallax on hero (8px translate, 1.04 scale) — reduced-motion respected",
+    "Scroll progress hairline in the header (1px gold, scales 0→1)",
+    "Section headings with sticky position and counter \"01 · 02 · 03\""
   ],
   "pages": ["index", "menu", "reservations", "about", "contact"],
   "presets": ["bold", "minimal", "warm"],

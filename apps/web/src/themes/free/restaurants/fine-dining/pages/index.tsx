@@ -2,14 +2,15 @@
  * LATTICE Theme #1 — Fine Dining
  * Home page — the entry point for the theme preview.
  *
- * Composition
- *   - Hero (existing) — full-bleed image + bottom-left text (Design Law 4)
- *   - "Welcome" section — brand statement, spacious density (Design Law 3 luxury)
- *   - "Tonight's tasting" — 3 featured courses from the seasonal menu
- *   - "The chef" — brief intro card
- *   - "Reserve" CTA — secondary conversion surface
- *   - Press strip
- *   - (Header / Footer are mounted by the app route, not the page.)
+ * Composition (the reference's "Theater of Dining" sequence):
+ *   1. Hero (full-bleed image + eyebrow + 2-line headline + 2 CTAs + scroll-cue)
+ *   2. The Experience — chef portrait (4:5) + pull-quote (asymmetric grid)
+ *   3. The Tasting Narrative — 3 bento cards with square dish images
+ *   4. The Intimacy of Limit — 36 / 12 stats
+ *   5. Reservations — inline form (underline-only inputs)
+ *   6. Map & Contact — Visit Us + Paris map (grayscale + pulsing pin)
+ *   7. Press / Accolades — 3-up strip
+ *   (Header / Footer are mounted by the app route, not the page.)
  *
  * Skill 2 — W3C Design Tokens
  *   Every visual primitive is a `var(--token-*)` reference. No hex,
@@ -18,41 +19,30 @@
 
 import * as React from "react";
 import { FineDiningHero } from "../components/Hero";
-import type { MenuCourse } from "../components/Menu";
-import { ArrowUpRight, Quote, Sparkles, Utensils } from "lucide-react";
+import { TextQuote } from "lucide-react";
 
-const FEATURED_COURSES: Array<{ eyebrow: string; course: MenuCourse }> = [
+// ─── Featured courses (bento) — pulled from the seasonal menu ─────────
+const FEATURED_COURSES = [
   {
-    eyebrow: "First",
-    course: {
-      id: "featured-1",
-      name: "Hamachi, yuzu kosho, pickled rose",
-      description:
-        "Day-boat yellowtail, brief cure in yuzu kosho, a single drop of pickled-rose oil, finished with sea grapes from the Brittany coast.",
-      price: "MP",
-    },
+    number: "I.",
+    label: "First",
+    title: "Hamachi",
+    description: "Yuzu kosho, radishes, cold-pressed olive oil.",
+    image: "/themes/fine-dining/dish-hamachi.jpg",
   },
   {
-    eyebrow: "Main",
-    course: {
-      id: "featured-2",
-      name: "Aged duck, cherry, smoked lardo",
-      description:
-        "Long-aged duck breast from the Périgord, lacquered in sour cherry, draped with smoked lardo, dressed with a charred shallot jus.",
-      price: "$78",
-      tags: ["gluten-free"],
-    },
+    number: "II.",
+    label: "Main",
+    title: "Aged Duck",
+    description: "Wild cherry, smoked lardo, fermented grains.",
+    image: "/themes/fine-dining/dish-duck.jpg",
   },
   {
-    eyebrow: "Dessert",
-    course: {
-      id: "featured-3",
-      name: "Mille-feuille, vanilla, brown butter",
-      description:
-        "Caramelised puff pastry layered with Tahitian vanilla crème, brown-butter ice cream, a single shard of spun sugar.",
-      price: "$24",
-      tags: ["vegetarian"],
-    },
+    number: "III.",
+    label: "Finale",
+    title: "Mille-feuille",
+    description: "Vanilla bean, brown butter, sea salt caramel.",
+    image: "/themes/fine-dining/dish-millefeuille.jpg",
   },
 ];
 
@@ -62,229 +52,411 @@ const PRESS = [
   { name: "Michelin Guide", note: "1 Star · 2026" },
 ];
 
+function Eyebrow({ children }: { children: React.ReactNode }) {
+  return (
+    <p className="inline-flex items-center gap-[var(--space-3)] font-[family-name:var(--font-body)] text-[length:var(--space-3)] font-[var(--font-weight-body-semibold)] uppercase tracking-[0.2em] text-[color:var(--color-primary-500)]">
+      <span aria-hidden="true" className="block h-px w-8 bg-[color:var(--color-primary-500)]" />
+      {children}
+    </p>
+  );
+}
+
+function GoldDivider() {
+  return (
+    <div
+      aria-hidden="true"
+      className="h-px w-full bg-[image:linear-gradient(90deg,transparent_0%,#e9c176_50%,transparent_100%)]"
+    />
+  );
+}
+
 export function FineDiningHome() {
   return (
     <>
-      {/* ─── Hero ─────────────────────────────────────────────── */}
+      {/* ─── 1. Hero ─────────────────────────────────────────────── */}
       <FineDiningHero
-        eyebrow="Est. 1998 · Downtown"
-        headline="An evening, set with care."
-        subhead="Seasonal tasting menus, an award-winning sommelier, and a dining room built for conversation. Reservations open thirty days in advance."
+        eyebrow="An Intimate Culinary Journey"
+        headline="An evening,"
+        headlineAccent="set with care."
+        subhead=""
         primaryCtaLabel="Reserve a table"
         primaryCtaHref="#reserve"
-        secondaryCtaLabel="View menu"
-        secondaryCtaHref="#menu"
+        secondaryCtaLabel="The Story"
+        secondaryCtaHref="#experience"
+        scrollCueHref="#welcome"
+        scrollCueLabel="Scroll to Discover"
       />
 
-      {/* ─── Welcome ──────────────────────────────────────────── */}
+      {/* ─── 2. The Experience — chef portrait + pull-quote ──────── */}
       <section
-        id="welcome"
-        aria-labelledby="welcome-heading"
-        className="bg-[color:var(--color-surface)] py-[var(--space-10)] md:py-[var(--space-11)]"
+        id="experience"
+        aria-labelledby="experience-heading"
+        className="relative overflow-hidden bg-[color:var(--color-surface-dark)] py-[var(--space-11)] md:py-[var(--space-11)]"
       >
-        <div className="mx-auto grid w-full max-w-[1440px] grid-cols-1 gap-[var(--space-8)] px-[var(--space-5)] md:grid-cols-12 md:px-[var(--space-6)]">
-          <div className="md:col-span-5">
-            <p className="font-[family-name:var(--font-body)] text-[length:var(--space-3)] font-[var(--font-weight-body-semibold)] uppercase tracking-[var(--letter-spacing-eyebrow)] text-[color:var(--color-primary-500)]">
-              The House
-            </p>
-            <h2
-              id="welcome-heading"
-              className="mt-[var(--space-4)] font-[family-name:var(--font-display)] text-[length:clamp(2.25rem,4.5vw,4rem)] font-[var(--font-weight-display)] leading-[var(--line-height-display)] tracking-[var(--letter-spacing-display)] text-[color:var(--color-text)]"
-            >
-              A small dining room. A long evening. A single, considered menu.
-            </h2>
-          </div>
-          <div className="md:col-span-7 md:pt-[var(--space-7)]">
-            <p className="font-[family-name:var(--font-body)] text-[length:var(--space-5)] leading-[var(--line-height-body)] text-[color:var(--color-text)]">
-              We seat thirty-six guests across twelve tables each evening. Our menu is set daily by
-              Chef Élise Marchand from what the markets brought in that morning, and our wine list
-              leans toward small growers you will not find in a chain.
-            </p>
-            <p className="mt-[var(--space-5)] font-[family-name:var(--font-body)] text-[length:var(--space-5)] leading-[var(--line-height-body)] text-[color:var(--color-text)]">
-              Reservations are released at 9:00 AM, thirty days in advance. We hold a few seats each
-              evening for walk-ins at the bar; call at five to check.
-            </p>
-            <a
-              href="#menu"
-              className="mt-[var(--space-7)] inline-flex items-center gap-[var(--space-2)] rounded-[var(--radius-sm)] border border-[color:var(--color-primary-500)] bg-transparent px-[var(--space-5)] py-[var(--space-3)] font-[family-name:var(--font-body)] text-[length:var(--space-4)] font-[var(--font-weight-body-semibold)] text-[color:var(--color-primary-700)] transition-[background-color,color] duration-[var(--duration-base)] ease-[var(--easing-standard)] hover:bg-[color:var(--color-primary-500)] hover:text-[color:var(--color-on-primary)] focus-visible:outline-2 focus-visible:outline-[color:var(--color-focus-ring)] focus-visible:outline-offset-2"
-            >
-              See tonight&apos;s menu
-              <ArrowUpRight className="h-[var(--space-4)] w-[var(--space-4)]" aria-hidden="true" />
-            </a>
+        <div className="mx-auto w-full max-w-[var(--container-max)] px-[var(--margin-mobile)] md:px-[var(--margin-desktop)]">
+          <div className="grid grid-cols-12 items-center gap-[var(--space-7)] md:gap-[var(--space-8)]">
+            {/* Chef portrait — 4:5, grayscale → color on hover, gold glow */}
+            <div className="col-span-12 md:col-span-6 lg:col-span-5">
+              <div className="relative">
+                <div className="aspect-[4/5] overflow-hidden border border-[color:var(--color-border)] p-[var(--space-2)]">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="/themes/fine-dining/chef.jpg"
+                    alt="Chef Élise Marchand in a moody, dimly lit kitchen"
+                    loading="lazy"
+                    decoding="async"
+                    className="h-full w-full object-cover grayscale transition-[filter] duration-700 ease-[var(--easing-standard)] hover:grayscale-0"
+                  />
+                </div>
+                {/* Gold glow behind */}
+                <div
+                  aria-hidden="true"
+                  className="absolute -bottom-8 -right-8 -z-10 h-48 w-48 rounded-full bg-[color:var(--color-primary-500)] opacity-10 blur-3xl"
+                />
+              </div>
+            </div>
+
+            {/* Pull-quote — offset to col 7 to create the asymmetric rhythm */}
+            <div className="col-span-12 md:col-span-6 md:col-start-7 lg:col-span-6">
+              <span aria-hidden="true" className="block">
+                <TextQuote
+                  className="h-[var(--space-9)] w-[var(--space-9)] text-[color:var(--color-primary-500)]"
+                  aria-hidden="true"
+                />
+              </span>
+              <h2
+                id="experience-heading"
+                className="mt-[var(--space-6)] font-[family-name:var(--font-display)] text-[length:clamp(1.75rem,3.5vw,3rem)] font-[var(--font-weight-display)] italic leading-[var(--line-height-display)] tracking-[var(--letter-spacing-display)] text-[color:var(--color-on-primary)]"
+              >
+                &ldquo;A tasting menu is a conversation you have with the season, translated through
+                fire and time.&rdquo;
+              </h2>
+              <p className="mt-[var(--space-6)] max-w-lg font-[family-name:var(--font-body)] text-[length:var(--space-5)] leading-[var(--line-height-body)] text-[color:var(--color-primary-100)]">
+                Chef Élise Marchand curates each evening at Maison Lumière as a single-seating
+                narrative. Her philosophy marries traditional French techniques with the raw,
+                seasonal bounty of the Loire Valley.
+              </p>
+              <p className="mt-[var(--space-5)] font-[family-name:var(--font-body)] text-[length:var(--space-3)] font-[var(--font-weight-body-semibold)] uppercase tracking-[0.2em] text-[color:var(--color-primary-500)]">
+                — Chef Élise Marchand
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ─── Tonight's tasting ───────────────────────────────── */}
+      {/* ─── 3. The Tasting Narrative — 3 bento cards ────────────── */}
       <section
-        id="menu"
-        aria-labelledby="tonight-heading"
-        className="bg-[color:var(--color-surface-alt)] py-[var(--space-10)] md:py-[var(--space-11)]"
+        id="tasting"
+        aria-labelledby="tasting-heading"
+        className="relative bg-[color:var(--color-surface)] py-[var(--space-11)]"
       >
-        <div className="mx-auto w-full max-w-[1440px] px-[var(--space-5)] md:px-[var(--space-6)]">
-          <div className="flex flex-col items-start justify-between gap-[var(--space-5)] md:flex-row md:items-end">
+        <div className="mx-auto w-full max-w-[var(--container-max)] px-[var(--margin-mobile)] md:px-[var(--margin-desktop)]">
+          {/* Header row: eyebrow + headline on the left, gold divider on the right */}
+          <div className="mb-[var(--space-9)] flex flex-col items-start justify-between gap-[var(--space-5)] md:flex-row md:items-end">
             <div>
-              <p className="font-[family-name:var(--font-body)] text-[length:var(--space-3)] font-[var(--font-weight-body-semibold)] uppercase tracking-[var(--letter-spacing-eyebrow)] text-[color:var(--color-primary-500)]">
-                Tonight
-              </p>
+              <Eyebrow>Late Winter Selections</Eyebrow>
               <h2
-                id="tonight-heading"
-                className="mt-[var(--space-3)] font-[family-name:var(--font-display)] text-[length:clamp(2rem,4vw,3.5rem)] font-[var(--font-weight-display)] leading-[var(--line-height-display)] tracking-[var(--letter-spacing-display)] text-[color:var(--color-text)]"
+                id="tasting-heading"
+                className="mt-[var(--space-4)] font-[family-name:var(--font-display)] text-[length:clamp(2rem,4.5vw,3.5rem)] font-[var(--font-weight-display)] leading-[var(--line-height-display)] tracking-[var(--letter-spacing-display)] text-[color:var(--color-text)]"
               >
-                From this evening&apos;s tasting
+                The Tasting Narrative
               </h2>
             </div>
-            <a
-              href="/themes/fine-dining/menu"
-              className="inline-flex items-center gap-[var(--space-2)] font-[family-name:var(--font-body)] text-[length:var(--space-4)] font-[var(--font-weight-body-medium)] text-[color:var(--color-primary-700)] underline-offset-4 transition-colors duration-[var(--duration-base)] ease-[var(--easing-standard)] hover:text-[color:var(--color-primary-900)] focus-visible:outline-2 focus-visible:outline-[color:var(--color-focus-ring)] focus-visible:outline-offset-2"
-            >
-              The full menu
-              <ArrowUpRight className="h-[var(--space-3)] w-[var(--space-3)]" aria-hidden="true" />
-            </a>
+            <div className="hidden w-1/3 md:block">
+              <GoldDivider />
+            </div>
           </div>
 
-          <ul className="mt-[var(--space-8)] grid grid-cols-1 gap-[var(--space-5)] md:grid-cols-3">
-            {FEATURED_COURSES.map(({ eyebrow, course }) => (
+          {/* 3 bento cards */}
+          <ul className="grid grid-cols-1 gap-[var(--space-7)] md:grid-cols-3">
+            {FEATURED_COURSES.map((course) => (
               <li
-                key={course.id}
-                className="flex flex-col gap-[var(--space-4)] rounded-[var(--radius-md)] border border-[color:var(--color-border)] bg-[color:var(--color-surface)] p-[var(--space-6)] shadow-[var(--shadow-sm)] transition-[box-shadow,transform] duration-[var(--duration-base)] ease-[var(--easing-standard)] hover:shadow-[var(--shadow-md)] hover:-translate-y-px"
+                key={course.title}
+                className="group relative overflow-hidden border border-[color:var(--color-border)] bg-[color:var(--color-surface-card)] p-[var(--space-6)] transition-[border-color] duration-500 ease-[var(--easing-standard)] hover:border-[color:rgba(233,193,118,0.40)]"
               >
-                <div className="flex items-center justify-between">
-                  <span className="font-[family-name:var(--font-body)] text-[length:var(--space-3)] font-[var(--font-weight-body-semibold)] uppercase tracking-[var(--letter-spacing-eyebrow)] text-[color:var(--color-primary-500)]">
-                    {eyebrow}
+                {/* Number + label */}
+                <div className="mb-[var(--space-7)]">
+                  <span className="font-[family-name:var(--font-body)] text-[length:var(--space-3)] font-[var(--font-weight-body-semibold)] uppercase tracking-[0.2em] text-[color:var(--color-primary-500)] opacity-60">
+                    {course.number} {course.label}
                   </span>
-                  <span className="font-[family-name:var(--font-display)] text-[length:var(--space-4)] font-[var(--font-weight-display)] text-[color:var(--color-primary-700)]">
-                    {course.price}
-                  </span>
+                  <h3 className="mt-[var(--space-2)] font-[family-name:var(--font-display)] text-[length:clamp(1.75rem,2.5vw,2.25rem)] font-[var(--font-weight-display)] leading-[var(--line-height-display)] tracking-[var(--letter-spacing-display)] text-[color:var(--color-text)] transition-colors duration-500 ease-[var(--easing-standard)] group-hover:text-[color:var(--color-primary-500)]">
+                    {course.title}
+                  </h3>
+                  <p className="mt-[var(--space-3)] font-[family-name:var(--font-body)] text-[length:var(--space-4)] leading-[var(--line-height-body)] text-[color:var(--color-text-muted)]">
+                    {course.description}
+                  </p>
                 </div>
-                <h3 className="font-[family-name:var(--font-display)] text-[length:var(--space-5)] font-[var(--font-weight-display)] leading-[var(--line-height-subhead)] tracking-[var(--letter-spacing-display)] text-[color:var(--color-text)]">
-                  {course.name}
-                </h3>
-                <p className="font-[family-name:var(--font-body)] text-[length:var(--space-4)] leading-[var(--line-height-body)] text-[color:var(--color-text-muted)]">
-                  {course.description}
-                </p>
-                {course.tags && course.tags.length > 0 && (
-                  <ul className="mt-auto flex flex-wrap gap-[var(--space-2)] pt-[var(--space-2)]">
-                    {course.tags.map((tag) => (
-                      <li
-                        key={tag}
-                        className="rounded-[var(--radius-full)] border border-[color:var(--color-border)] px-[var(--space-3)] py-[var(--space-1)] font-[family-name:var(--font-body)] text-[length:var(--space-3)] text-[color:var(--color-text-muted)]"
-                      >
-                        {tag}
-                      </li>
-                    ))}
-                  </ul>
-                )}
+
+                {/* Square dish image with hover scale */}
+                <div className="aspect-square overflow-hidden">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={course.image}
+                    alt={course.title}
+                    loading="lazy"
+                    decoding="async"
+                    className="h-full w-full object-cover transition-transform duration-1000 ease-[var(--easing-standard)] group-hover:scale-110"
+                  />
+                </div>
+
+                {/* Bottom line that grows on hover (the reference's signature) */}
+                <div
+                  aria-hidden="true"
+                  className="absolute bottom-0 left-0 h-[2px] w-0 bg-[color:var(--color-primary-500)] transition-[width] duration-700 ease-[var(--easing-standard)] group-hover:w-full"
+                />
               </li>
             ))}
           </ul>
         </div>
       </section>
 
-      {/* ─── The chef ────────────────────────────────────────── */}
+      {/* ─── 4. The Intimacy of Limit — 36 / 12 stats ─────────────── */}
       <section
-        id="story"
-        aria-labelledby="chef-heading"
-        className="bg-[color:var(--color-surface)] py-[var(--space-10)] md:py-[var(--space-11)]"
+        aria-labelledby="limit-heading"
+        className="relative border-y border-[color:var(--color-border)] bg-[color:var(--color-surface-dark)] py-[var(--space-11)]"
       >
-        <div className="mx-auto grid w-full max-w-[1440px] grid-cols-1 items-start gap-[var(--space-8)] px-[var(--space-5)] md:grid-cols-12 md:px-[var(--space-6)]">
-          <div className="md:col-span-5">
-            <p className="font-[family-name:var(--font-body)] text-[length:var(--space-3)] font-[var(--font-weight-body-semibold)] uppercase tracking-[var(--letter-spacing-eyebrow)] text-[color:var(--color-primary-500)]">
-              The Chef
-            </p>
+        <div className="mx-auto grid w-full max-w-[var(--container-max)] grid-cols-12 items-center gap-[var(--space-8)] px-[var(--margin-mobile)] md:px-[var(--margin-desktop)]">
+          <div className="col-span-12 md:col-span-6">
+            <Eyebrow>The Intimacy of Limit</Eyebrow>
             <h2
-              id="chef-heading"
-              className="mt-[var(--space-3)] font-[family-name:var(--font-display)] text-[length:clamp(2rem,4vw,3.5rem)] font-[var(--font-weight-display)] leading-[var(--line-height-display)] tracking-[var(--letter-spacing-display)] text-[color:var(--color-text)]"
+              id="limit-heading"
+              className="mt-[var(--space-5)] font-[family-name:var(--font-display)] text-[length:clamp(2.25rem,5vw,3.75rem)] font-[var(--font-weight-display)] leading-[var(--line-height-display)] tracking-[var(--letter-spacing-display)] text-[color:var(--color-on-primary)]"
             >
-              Élise Marchand
+              The Intimacy of
+              <br />
+              <em className="italic text-[color:var(--color-primary-300)]">Limit</em>
             </h2>
-            <p className="mt-[var(--space-3)] font-[family-name:var(--font-body)] text-[length:var(--space-4)] italic text-[color:var(--color-text-muted)]">
-              Chef &amp; Owner
-            </p>
+
+            <div className="mt-[var(--space-7)] grid grid-cols-2 gap-[var(--space-7)]">
+              <div>
+                <p className="font-[family-name:var(--font-display)] text-[length:clamp(2.5rem,4vw,3.25rem)] font-[var(--font-weight-display)] leading-none text-[color:var(--color-primary-500)]">
+                  36
+                </p>
+                <p className="mt-[var(--space-2)] font-[family-name:var(--font-body)] text-[length:var(--space-3)] font-[var(--font-weight-body-semibold)] uppercase tracking-[0.2em] text-[color:var(--color-primary-200)]">
+                  Guests Nightly
+                </p>
+              </div>
+              <div>
+                <p className="font-[family-name:var(--font-display)] text-[length:clamp(2.5rem,4vw,3.25rem)] font-[var(--font-weight-display)] leading-none text-[color:var(--color-primary-500)]">
+                  12
+                </p>
+                <p className="mt-[var(--space-2)] font-[family-name:var(--font-body)] text-[length:var(--space-3)] font-[var(--font-weight-body-semibold)] uppercase tracking-[0.2em] text-[color:var(--color-primary-200)]">
+                  Exclusive Tables
+                </p>
+              </div>
+              <div className="col-span-2 border-t border-[color:var(--color-border)] pt-[var(--space-5)]">
+                <p className="font-[family-name:var(--font-body)] text-[length:var(--space-5)] leading-[var(--line-height-body)] text-[color:var(--color-on-primary)]">
+                  Our reservations open precisely 30 days in advance at midnight.
+                </p>
+                <p className="mt-[var(--space-3)] font-[family-name:var(--font-body)] text-[length:var(--space-4)] leading-[var(--line-height-body)] text-[color:var(--color-primary-200)]">
+                  To maintain the absolute focus required for our menu, we offer a single sitting
+                  per table, ensuring you have the entire evening to yourself.
+                </p>
+              </div>
+            </div>
           </div>
-          <div className="md:col-span-7 md:pt-[var(--space-2)]">
-            <Quote
-              className="h-[var(--space-7)] w-[var(--space-7)] text-[color:var(--color-primary-200)]"
-              aria-hidden="true"
-            />
-            <blockquote className="mt-[var(--space-3)] font-[family-name:var(--font-display)] text-[length:clamp(1.5rem,2.5vw,2rem)] italic leading-[var(--line-height-subhead)] text-[color:var(--color-text)]">
-              &ldquo;A tasting menu is a conversation you have with the season. You get one question
-              a day. Today it was: what did the harbour bring in?&rdquo;
-            </blockquote>
-            <p className="mt-[var(--space-6)] font-[family-name:var(--font-body)] text-[length:var(--space-4)] leading-[var(--line-height-body)] text-[color:var(--color-text)]">
-              Élise trained in Lyon, then spent six years under chef Anne-Sophie Pic before opening
-              Maison Lumière in 1998. She is the mother of the duck-and-cherry dish that has been on
-              the menu, in some form, every summer since.
-            </p>
-            <a
-              href="/themes/fine-dining/about"
-              className="mt-[var(--space-6)] inline-flex items-center gap-[var(--space-2)] font-[family-name:var(--font-body)] text-[length:var(--space-4)] font-[var(--font-weight-body-medium)] text-[color:var(--color-primary-700)] underline-offset-4 transition-colors duration-[var(--duration-base)] ease-[var(--easing-standard)] hover:text-[color:var(--color-primary-900)] focus-visible:outline-2 focus-visible:outline-[color:var(--color-focus-ring)] focus-visible:outline-offset-2"
-            >
-              Read the full story
-              <ArrowUpRight className="h-[var(--space-3)] w-[var(--space-3)]" aria-hidden="true" />
-            </a>
+
+          {/* Right column — form card */}
+          <div className="col-span-12 md:col-span-6">
+            <div className="relative border border-[color:rgba(233,193,118,0.20)] bg-[color:var(--color-surface-card)] p-[var(--space-7)] md:p-[var(--space-9)]">
+              {/* Decorative event icon top-right */}
+              <div
+                aria-hidden="true"
+                className="absolute right-[var(--space-4)] top-[var(--space-4)]"
+              >
+                <TextQuote
+                  className="h-[var(--space-9)] w-[var(--space-9)] text-[color:var(--color-primary-500)] opacity-20"
+                  aria-hidden="true"
+                />
+              </div>
+              <h3 className="font-[family-name:var(--font-display)] text-[length:clamp(1.5rem,2.5vw,2rem)] font-[var(--font-weight-display)] leading-[var(--line-height-display)] tracking-[var(--letter-spacing-display)] text-[color:var(--color-on-primary)]">
+                Secure Your Table
+              </h3>
+              <form className="mt-[var(--space-7)] flex flex-col gap-[var(--space-5)]" noValidate>
+                <div className="grid grid-cols-1 gap-[var(--space-5)] sm:grid-cols-2">
+                  <label className="flex flex-col gap-[var(--space-2)]">
+                    <span className="font-[family-name:var(--font-body)] text-[length:var(--space-3)] font-[var(--font-weight-body-semibold)] uppercase tracking-[0.2em] text-[color:var(--color-primary-200)]">
+                      Full Name
+                    </span>
+                    <input
+                      type="text"
+                      className="border-b border-[color:var(--color-border)] bg-transparent py-[var(--space-2)] font-[family-name:var(--font-body)] text-[length:var(--space-4)] text-[color:var(--color-on-primary)] outline-none transition-colors duration-[var(--duration-base)] ease-[var(--easing-standard)] focus:border-[color:var(--color-primary-500)]"
+                    />
+                  </label>
+                  <label className="flex flex-col gap-[var(--space-2)]">
+                    <span className="font-[family-name:var(--font-body)] text-[length:var(--space-3)] font-[var(--font-weight-body-semibold)] uppercase tracking-[0.2em] text-[color:var(--color-primary-200)]">
+                      Phone
+                    </span>
+                    <input
+                      type="tel"
+                      className="border-b border-[color:var(--color-border)] bg-transparent py-[var(--space-2)] font-[family-name:var(--font-body)] text-[length:var(--space-4)] text-[color:var(--color-on-primary)] outline-none transition-colors duration-[var(--duration-base)] ease-[var(--easing-standard)] focus:border-[color:var(--color-primary-500)]"
+                    />
+                  </label>
+                </div>
+                <div className="grid grid-cols-1 gap-[var(--space-5)] sm:grid-cols-2">
+                  <label className="flex flex-col gap-[var(--space-2)]">
+                    <span className="font-[family-name:var(--font-body)] text-[length:var(--space-3)] font-[var(--font-weight-body-semibold)] uppercase tracking-[0.2em] text-[color:var(--color-primary-200)]">
+                      Preferred Date
+                    </span>
+                    <input
+                      type="date"
+                      className="border-b border-[color:var(--color-border)] bg-transparent py-[var(--space-2)] font-[family-name:var(--font-body)] text-[length:var(--space-4)] text-[color:var(--color-on-primary)] outline-none transition-colors duration-[var(--duration-base)] ease-[var(--easing-standard)] focus:border-[color:var(--color-primary-500)] [color-scheme:dark]"
+                    />
+                  </label>
+                  <label className="flex flex-col gap-[var(--space-2)]">
+                    <span className="font-[family-name:var(--font-body)] text-[length:var(--space-3)] font-[var(--font-weight-body-semibold)] uppercase tracking-[0.2em] text-[color:var(--color-primary-200)]">
+                      Guests
+                    </span>
+                    <select
+                      defaultValue="2 Guests"
+                      className="border-b border-[color:var(--color-border)] bg-transparent py-[var(--space-2)] font-[family-name:var(--font-body)] text-[length:var(--space-4)] text-[color:var(--color-on-primary)] outline-none transition-colors duration-[var(--duration-base)] ease-[var(--easing-standard)] focus:border-[color:var(--color-primary-500)]"
+                    >
+                      <option className="bg-[color:var(--color-surface)]">2 Guests</option>
+                      <option className="bg-[color:var(--color-surface)]">4 Guests</option>
+                      <option className="bg-[color:var(--color-surface)]">6 Guests</option>
+                    </select>
+                  </label>
+                </div>
+                <label className="flex flex-col gap-[var(--space-2)]">
+                  <span className="font-[family-name:var(--font-body)] text-[length:var(--space-3)] font-[var(--font-weight-body-semibold)] uppercase tracking-[0.2em] text-[color:var(--color-primary-200)]">
+                    Special Requests
+                  </span>
+                  <textarea
+                    rows={2}
+                    className="resize-none border-b border-[color:var(--color-border)] bg-transparent py-[var(--space-2)] font-[family-name:var(--font-body)] text-[length:var(--space-4)] text-[color:var(--color-on-primary)] outline-none transition-colors duration-[var(--duration-base)] ease-[var(--easing-standard)] focus:border-[color:var(--color-primary-500)]"
+                  />
+                </label>
+                <button
+                  type="submit"
+                  className="mt-[var(--space-3)] w-full bg-[color:var(--color-primary-500)] py-[var(--space-4)] font-[family-name:var(--font-body)] text-[length:var(--space-3)] font-[var(--font-weight-body-semibold)] uppercase tracking-[0.2em] text-[color:var(--color-on-primary)] shadow-[var(--shadow-sm)] transition-[background-color,box-shadow] duration-[var(--duration-base)] ease-[var(--easing-standard)] hover:bg-[color:var(--color-primary-700)] hover:shadow-[var(--shadow-md)] focus-visible:outline-2 focus-visible:outline-[color:var(--color-focus-ring)] focus-visible:outline-offset-2"
+                >
+                  Request Reservation
+                </button>
+              </form>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ─── Reserve CTA ─────────────────────────────────────── */}
+      {/* ─── 5. Map & Contact — Visit Us + Paris map ────────────── */}
       <section
-        id="reserve"
-        aria-labelledby="reserve-heading"
-        className="bg-[color:var(--color-surface-dark)] py-[var(--space-10)] text-[color:var(--color-on-primary)] md:py-[var(--space-11)]"
+        id="contact"
+        aria-labelledby="visit-heading"
+        className="relative bg-[color:var(--color-surface)] py-[var(--space-11)]"
       >
-        <div className="mx-auto grid w-full max-w-[1440px] grid-cols-1 items-center gap-[var(--space-7)] px-[var(--space-5)] md:grid-cols-12 md:px-[var(--space-6)]">
-          <div className="md:col-span-7">
-            <p className="inline-flex items-center gap-[var(--space-2)] font-[family-name:var(--font-body)] text-[length:var(--space-3)] font-[var(--font-weight-body-semibold)] uppercase tracking-[var(--letter-spacing-eyebrow)] text-[color:var(--color-primary-300)]">
-              <Sparkles className="h-[var(--space-3)] w-[var(--space-3)]" aria-hidden="true" />
-              Thirty days open
-            </p>
+        <div className="mx-auto grid w-full max-w-[var(--container-max)] grid-cols-12 items-center gap-[var(--space-7)] px-[var(--margin-mobile)] md:px-[var(--margin-desktop)]">
+          {/* Left: Visit Us details */}
+          <div className="col-span-12 md:col-span-4 flex flex-col justify-center">
+            <Eyebrow>Visit Us</Eyebrow>
             <h2
-              id="reserve-heading"
-              className="mt-[var(--space-3)] font-[family-name:var(--font-display)] text-[length:clamp(2.25rem,4.5vw,4rem)] font-[var(--font-weight-display)] leading-[var(--line-height-display)] tracking-[var(--letter-spacing-display)] text-[color:var(--color-on-primary)]"
+              id="visit-heading"
+              className="mt-[var(--space-4)] font-[family-name:var(--font-display)] text-[length:clamp(2rem,4vw,3rem)] font-[var(--font-weight-display)] leading-[var(--line-height-display)] tracking-[var(--letter-spacing-display)] text-[color:var(--color-text)]"
             >
-              Reserve your evening.
+              Find us in Paris.
             </h2>
-            <p className="mt-[var(--space-4)] max-w-xl font-[family-name:var(--font-body)] text-[length:var(--space-5)] leading-[var(--line-height-body)] text-[color:var(--color-primary-100)]">
-              Tables for two to twelve. The full menu is served to the entire table. Children ten
-              and up are warmly welcomed; younger guests by special arrangement.
-            </p>
+            <ul className="mt-[var(--space-6)] flex flex-col gap-[var(--space-5)]">
+              <li className="flex items-start gap-[var(--space-3)]">
+                <span
+                  className="mt-[var(--space-1)] font-[family-name:var(--font-body)] text-[length:var(--space-4)] text-[color:var(--color-primary-500)]"
+                  aria-hidden="true"
+                >
+                  ◉
+                </span>
+                <div>
+                  <p className="font-[family-name:var(--font-body)] text-[length:var(--space-5)] text-[color:var(--color-text)]">
+                    12 Rue de la Paix
+                  </p>
+                  <p className="font-[family-name:var(--font-body)] text-[length:var(--space-4)] text-[color:var(--color-text-muted)]">
+                    Paris, France 75002
+                  </p>
+                </div>
+              </li>
+              <li className="flex items-center gap-[var(--space-3)]">
+                <span
+                  className="font-[family-name:var(--font-body)] text-[length:var(--space-4)] text-[color:var(--color-primary-500)]"
+                  aria-hidden="true"
+                >
+                  ☏
+                </span>
+                <a
+                  href="tel:+15550123456"
+                  className="font-[family-name:var(--font-body)] text-[length:var(--space-5)] text-[color:var(--color-text)] transition-colors duration-[var(--duration-base)] hover:text-[color:var(--color-primary-500)] focus-visible:outline-2 focus-visible:outline-[color:var(--color-focus-ring)] focus-visible:outline-offset-2"
+                >
+                  +1 (555) 012-3456
+                </a>
+              </li>
+              <li className="flex items-center gap-[var(--space-3)]">
+                <span
+                  className="font-[family-name:var(--font-body)] text-[length:var(--space-4)] text-[color:var(--color-primary-500)]"
+                  aria-hidden="true"
+                >
+                  ✉
+                </span>
+                <a
+                  href="mailto:concierge@maisonlumiere.example"
+                  className="font-[family-name:var(--font-body)] text-[length:var(--space-5)] text-[color:var(--color-text)] transition-colors duration-[var(--duration-base)] hover:text-[color:var(--color-primary-500)] focus-visible:outline-2 focus-visible:outline-[color:var(--color-focus-ring)] focus-visible:outline-offset-2"
+                >
+                  concierge@maisonlumiere.example
+                </a>
+              </li>
+            </ul>
           </div>
-          <div className="flex flex-col gap-[var(--space-3)] md:col-span-5 md:items-end">
-            <a
-              href="/themes/fine-dining/reservations"
-              className="inline-flex w-full items-center justify-center gap-[var(--space-2)] rounded-[var(--radius-sm)] bg-[color:var(--color-primary-500)] px-[var(--space-6)] py-[var(--space-4)] font-[family-name:var(--font-body)] text-[length:var(--space-4)] font-[var(--font-weight-body-semibold)] text-[color:var(--color-on-primary)] shadow-[var(--shadow-md)] transition-[background-color,box-shadow,transform] duration-[var(--duration-base)] ease-[var(--easing-standard)] hover:bg-[color:var(--color-primary-700)] hover:shadow-[var(--shadow-lg)] hover:-translate-y-px focus-visible:outline-2 focus-visible:outline-[color:var(--color-focus-ring)] focus-visible:outline-offset-2 sm:w-auto"
-            >
-              <Utensils className="h-[var(--space-4)] w-[var(--space-4)]" aria-hidden="true" />
-              Reserve a table
-            </a>
-            <a
-              href="tel:+15550123456"
-              className="inline-flex w-full items-center justify-center rounded-[var(--radius-sm)] border border-[color:var(--color-primary-700)] bg-transparent px-[var(--space-6)] py-[var(--space-3)] font-[family-name:var(--font-body)] text-[length:var(--space-4)] font-[var(--font-weight-body-medium)] text-[color:var(--color-on-primary)] transition-[background-color,border-color] duration-[var(--duration-base)] ease-[var(--easing-standard)] hover:border-[color:var(--color-primary-500)] hover:bg-[color:rgba(250,246,238,0.06)] focus-visible:outline-2 focus-visible:outline-[color:var(--color-focus-ring)] focus-visible:outline-offset-2 sm:w-auto"
-            >
-              Or call +1 (555) 012-3456
-            </a>
+
+          {/* Right: Paris map image with grayscale + pulsing gold pin */}
+          <div className="col-span-12 md:col-span-8">
+            <div className="relative h-[450px] overflow-hidden">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/themes/fine-dining/map-paris.jpg"
+                alt="Aerial view of Paris at night, with city lights tracing the streets"
+                loading="lazy"
+                decoding="async"
+                className="h-full w-full object-cover grayscale contrast-125 opacity-70"
+              />
+              {/* Gold tint overlay */}
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0 bg-[color:var(--color-primary-500)] opacity-5"
+              />
+              {/* Pulsing gold pin */}
+              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+                <div className="relative">
+                  <span
+                    aria-hidden="true"
+                    className="absolute left-1/2 top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[color:var(--color-primary-500)] motion-safe:animate-[fdPing_1.6s_ease-out_infinite]"
+                  />
+                  <span
+                    aria-hidden="true"
+                    className="relative z-10 block h-4 w-4 rounded-full border-2 border-[color:var(--color-on-primary)] bg-[color:var(--color-primary-500)]"
+                  />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ─── Press strip ─────────────────────────────────────── */}
+      {/* ─── 6. Press / Accolades strip ────────────────────────── */}
       <section
+        id="press"
         aria-labelledby="press-heading"
-        className="bg-[color:var(--color-surface)] py-[var(--space-8)]"
+        className="relative border-t border-[color:var(--color-border)] bg-[color:var(--color-surface)] py-[var(--space-9)] md:py-[var(--space-10)]"
       >
-        <div className="mx-auto w-full max-w-[1440px] px-[var(--space-5)] md:px-[var(--space-6)]">
+        <div className="mx-auto w-full max-w-[var(--container-max)] px-[var(--margin-mobile)] md:px-[var(--margin-desktop)]">
           <h2
             id="press-heading"
-            className="text-center font-[family-name:var(--font-body)] text-[length:var(--space-3)] font-[var(--font-weight-body-semibold)] uppercase tracking-[var(--letter-spacing-eyebrow)] text-[color:var(--color-text-muted)]"
+            className="text-center font-[family-name:var(--font-body)] text-[length:var(--space-3)] font-[var(--font-weight-body-semibold)] uppercase tracking-[0.2em] text-[color:var(--color-text-muted)]"
           >
             As featured in
           </h2>
-          <ul className="mt-[var(--space-5)] grid grid-cols-1 gap-[var(--space-5)] sm:grid-cols-3">
-            {PRESS.map(({ name, note }) => (
+          <ul className="mt-[var(--space-6)] grid grid-cols-1 gap-[var(--space-5)] sm:grid-cols-3 sm:gap-[var(--space-7)]">
+            {PRESS.map(({ name, note }, idx) => (
               <li
                 key={name}
-                className="flex flex-col items-center gap-[var(--space-1)] text-center"
+                className={[
+                  "flex flex-col items-center gap-[var(--space-2)] text-center sm:px-[var(--space-5)]",
+                  idx > 0 ? "sm:border-l sm:border-[color:var(--color-border)]" : "",
+                ].join(" ")}
               >
                 <span className="font-[family-name:var(--font-display)] text-[length:var(--space-5)] font-[var(--font-weight-display)] tracking-[var(--letter-spacing-display)] text-[color:var(--color-text)]">
                   {name}
@@ -297,6 +469,14 @@ export function FineDiningHome() {
           </ul>
         </div>
       </section>
+
+      {/* ─── inline keyframes for the pin ping ──────────────────── */}
+      <style>{`
+        @keyframes fdPing {
+          0%   { transform: translate(-50%, -50%) scale(1);   opacity: 0.9; }
+          80%, 100% { transform: translate(-50%, -50%) scale(2.6); opacity: 0; }
+        }
+      `}</style>
     </>
   );
 }

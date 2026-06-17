@@ -3,6 +3,11 @@
  * About page — restaurant story + chef section + values.
  *
  * No Lorem Ipsum. Real fine-dining copy throughout.
+ *
+ * Layout follows the "Theater of Dining" rhythm:
+ *   - Eyebrow ornament (gold hairline + uppercase label)
+ *   - Hairline top + bottom frames per section
+ *   - Italic display accents on key phrases (the reference's signature)
  */
 
 import * as React from "react";
@@ -34,23 +39,44 @@ const TIMELINE = [
   { year: "2024", note: "Renewed for a second Michelin star in the city guide." },
 ];
 
+function Eyebrow({ children }: { children: React.ReactNode }) {
+  return (
+    <p className="inline-flex items-center gap-[var(--space-3)] font-[family-name:var(--font-body)] text-[length:var(--space-3)] font-[var(--font-weight-body-semibold)] uppercase tracking-[var(--letter-spacing-eyebrow)] text-[color:var(--color-primary-500)]">
+      <span aria-hidden="true" className="block h-px w-8 bg-[color:var(--color-primary-500)]" />
+      {children}
+    </p>
+  );
+}
+
+function HairlineFrame({ position }: { position: "top" | "bottom" }) {
+  return (
+    <div
+      aria-hidden="true"
+      className={[
+        "pointer-events-none absolute inset-x-0 h-px bg-[color:var(--color-border)] opacity-60",
+        position === "top" ? "top-0" : "bottom-0",
+      ].join(" ")}
+    />
+  );
+}
+
 export function FineDiningAboutPage() {
   return (
     <>
       {/* ─── Page header ─────────────────────────────────────── */}
       <section
         aria-labelledby="about-heading"
-        className="bg-[color:var(--color-surface)] py-[var(--space-10)] md:py-[var(--space-11)]"
+        className="relative bg-[color:var(--color-surface)] py-[var(--space-10)] md:py-[var(--space-11)]"
       >
-        <div className="mx-auto w-full max-w-[1440px] px-[var(--space-5)] md:px-[var(--space-6)]">
-          <p className="font-[family-name:var(--font-body)] text-[length:var(--space-3)] font-[var(--font-weight-body-semibold)] uppercase tracking-[var(--letter-spacing-eyebrow)] text-[color:var(--color-primary-500)]">
-            The House
-          </p>
+        <HairlineFrame position="top" />
+        <div className="mx-auto w-full max-w-[var(--container-max)] px-[var(--margin-mobile)] md:px-[var(--margin-desktop)]">
+          <Eyebrow>The House</Eyebrow>
           <h1
             id="about-heading"
-            className="mt-[var(--space-3)] max-w-4xl font-[family-name:var(--font-display)] text-[length:clamp(2.5rem,6vw,5rem)] font-[var(--font-weight-display)] leading-[var(--line-height-display)] tracking-[var(--letter-spacing-display)] text-[color:var(--color-text)]"
+            className="mt-[var(--space-4)] max-w-4xl font-[family-name:var(--font-display)] text-[length:clamp(2.5rem,6vw,5rem)] font-[var(--font-weight-display)] leading-[var(--line-height-display)] tracking-[var(--letter-spacing-display)] text-[color:var(--color-text)]"
           >
-            Twenty-six years of one small dining room.
+            Twenty-six years of{" "}
+            <em className="italic text-[color:var(--color-primary-500)]">one small dining room.</em>
           </h1>
         </div>
       </section>
@@ -58,9 +84,9 @@ export function FineDiningAboutPage() {
       {/* ─── Story ───────────────────────────────────────────── */}
       <section
         aria-labelledby="story-heading"
-        className="bg-[color:var(--color-surface)] pb-[var(--space-10)] md:pb-[var(--space-11)]"
+        className="relative bg-[color:var(--color-surface)] pb-[var(--space-10)] md:pb-[var(--space-11)]"
       >
-        <div className="mx-auto grid w-full max-w-[1440px] grid-cols-1 gap-[var(--space-8)] px-[var(--space-5)] md:grid-cols-12 md:px-[var(--space-6)]">
+        <div className="mx-auto grid w-full max-w-[var(--container-max)] grid-cols-1 gap-[var(--space-8)] px-[var(--margin-mobile)] md:grid-cols-12 md:px-[var(--margin-desktop)]">
           <div className="md:col-span-5">
             <h2
               id="story-heading"
@@ -92,20 +118,19 @@ export function FineDiningAboutPage() {
       {/* ─── Chef ────────────────────────────────────────────── */}
       <section
         aria-labelledby="chef-heading"
-        className="bg-[color:var(--color-surface-alt)] py-[var(--space-10)] md:py-[var(--space-11)]"
+        className="relative bg-[color:var(--color-surface-alt)] py-[var(--space-10)] md:py-[var(--space-11)]"
       >
-        <div className="mx-auto grid w-full max-w-[1440px] grid-cols-1 items-start gap-[var(--space-8)] px-[var(--space-5)] md:grid-cols-12 md:px-[var(--space-6)]">
+        <HairlineFrame position="top" />
+        <div className="mx-auto grid w-full max-w-[var(--container-max)] grid-cols-1 items-start gap-[var(--space-8)] px-[var(--margin-mobile)] md:grid-cols-12 md:px-[var(--margin-desktop)]">
           <div className="md:col-span-5">
-            <p className="font-[family-name:var(--font-body)] text-[length:var(--space-3)] font-[var(--font-weight-body-semibold)] uppercase tracking-[var(--letter-spacing-eyebrow)] text-[color:var(--color-primary-500)]">
-              The Chef
-            </p>
+            <Eyebrow>The Chef</Eyebrow>
             <h2
               id="chef-heading"
-              className="mt-[var(--space-3)] font-[family-name:var(--font-display)] text-[length:clamp(2.25rem,4.5vw,4rem)] font-[var(--font-weight-display)] leading-[var(--line-height-display)] tracking-[var(--letter-spacing-display)] text-[color:var(--color-text)]"
+              className="mt-[var(--space-4)] font-[family-name:var(--font-display)] text-[length:clamp(2.25rem,4.5vw,4rem)] font-[var(--font-weight-display)] leading-[var(--line-height-display)] tracking-[var(--letter-spacing-display)] text-[color:var(--color-text)]"
             >
               Élise Marchand
             </h2>
-            <p className="mt-[var(--space-3)] font-[family-name:var(--font-body)] text-[length:var(--space-4)] italic text-[color:var(--color-text-muted)]">
+            <p className="mt-[var(--space-3)] font-[family-name:var(--font-display)] text-[length:var(--space-4)] italic text-[color:var(--color-primary-300)]">
               Chef &amp; Owner · since 2003 in our kitchen
             </p>
             <dl className="mt-[var(--space-7)] flex flex-col gap-[var(--space-3)] font-[family-name:var(--font-body)] text-[length:var(--space-4)] text-[color:var(--color-text)]">
@@ -133,10 +158,10 @@ export function FineDiningAboutPage() {
           </div>
           <div className="md:col-span-7 md:pt-[var(--space-2)]">
             <Quote
-              className="h-[var(--space-7)] w-[var(--space-7)] text-[color:var(--color-primary-200)]"
+              className="h-[var(--space-7)] w-[var(--space-7)] text-[color:var(--color-primary-500)] opacity-80"
               aria-hidden="true"
             />
-            <blockquote className="mt-[var(--space-3)] font-[family-name:var(--font-display)] text-[length:clamp(1.5rem,2.5vw,2rem)] italic leading-[var(--line-height-subhead)] text-[color:var(--color-text)]">
+            <blockquote className="mt-[var(--space-3)] font-[family-name:var(--font-display)] text-[length:clamp(1.5rem,2.5vw,2rem)] font-[var(--font-weight-display-italic)] italic leading-[var(--line-height-subhead)] text-[color:var(--color-text)]">
               &ldquo;I learned the hardest lesson in the kitchen from a chef who never once raised
               her voice: a tasting menu is a series of small decisions, and every one of them has to
               be right. There is no compensating at the end.&rdquo;
@@ -154,9 +179,10 @@ export function FineDiningAboutPage() {
       {/* ─── Values ──────────────────────────────────────────── */}
       <section
         aria-labelledby="values-heading"
-        className="bg-[color:var(--color-surface)] py-[var(--space-10)] md:py-[var(--space-11)]"
+        className="relative bg-[color:var(--color-surface)] py-[var(--space-10)] md:py-[var(--space-11)]"
       >
-        <div className="mx-auto w-full max-w-[1440px] px-[var(--space-5)] md:px-[var(--space-6)]">
+        <HairlineFrame position="top" />
+        <div className="mx-auto w-full max-w-[var(--container-max)] px-[var(--margin-mobile)] md:px-[var(--margin-desktop)]">
           <h2
             id="values-heading"
             className="max-w-3xl font-[family-name:var(--font-display)] text-[length:clamp(2rem,4vw,3.5rem)] font-[var(--font-weight-display)] leading-[var(--line-height-display)] tracking-[var(--letter-spacing-display)] text-[color:var(--color-text)]"
@@ -167,10 +193,14 @@ export function FineDiningAboutPage() {
             {VALUES.map(({ icon: Icon, title, body }) => (
               <li
                 key={title}
-                className="flex flex-col gap-[var(--space-4)] rounded-[var(--radius-md)] border border-[color:var(--color-border)] bg-[color:var(--color-surface)] p-[var(--space-6)]"
+                className="flex flex-col gap-[var(--space-4)] rounded-[var(--radius-sm)] border border-[color:var(--color-border)] bg-[color:var(--color-surface-card)] p-[var(--space-6)] transition-[border-color,transform] duration-[var(--duration-base)] ease-[var(--easing-standard)] hover:border-[color:var(--color-primary-700)] hover:-translate-y-px"
               >
+                <span
+                  aria-hidden="true"
+                  className="block h-px w-10 bg-[color:var(--color-primary-500)]"
+                />
                 <Icon
-                  className="h-[var(--space-6)] w-[var(--space-6)] text-[color:var(--color-primary-500)]"
+                  className="h-[var(--space-5)] w-[var(--space-5)] text-[color:var(--color-primary-500)]"
                   aria-hidden="true"
                 />
                 <h3 className="font-[family-name:var(--font-display)] text-[length:var(--space-5)] font-[var(--font-weight-display)] leading-[var(--line-height-subhead)] tracking-[var(--letter-spacing-display)] text-[color:var(--color-text)]">
@@ -188,22 +218,18 @@ export function FineDiningAboutPage() {
       {/* ─── Timeline ────────────────────────────────────────── */}
       <section
         aria-labelledby="timeline-heading"
-        className="bg-[color:var(--color-surface-alt)] py-[var(--space-10)] md:py-[var(--space-11)]"
+        className="relative bg-[color:var(--color-surface-alt)] py-[var(--space-10)] md:py-[var(--space-11)]"
       >
-        <div className="mx-auto w-full max-w-[1440px] px-[var(--space-5)] md:px-[var(--space-6)]">
-          <h2
-            id="timeline-heading"
-            className="font-[family-name:var(--font-body)] text-[length:var(--space-3)] font-[var(--font-weight-body-semibold)] uppercase tracking-[var(--letter-spacing-eyebrow)] text-[color:var(--color-primary-500)]"
-          >
-            Twenty-six years
-          </h2>
+        <HairlineFrame position="top" />
+        <div className="mx-auto w-full max-w-[var(--container-max)] px-[var(--margin-mobile)] md:px-[var(--margin-desktop)]">
+          <Eyebrow>Twenty-six years</Eyebrow>
           <ol className="mt-[var(--space-6)] flex flex-col gap-[var(--space-5)]">
             {TIMELINE.map(({ year, note }) => (
               <li
                 key={year}
                 className="grid grid-cols-[auto,1fr] items-baseline gap-[var(--space-6)] border-b border-[color:var(--color-border)] pb-[var(--space-4)] last:border-b-0"
               >
-                <span className="font-[family-name:var(--font-display)] text-[length:var(--space-6)] font-[var(--font-weight-display)] leading-none tracking-[var(--letter-spacing-display)] text-[color:var(--color-primary-700)]">
+                <span className="font-[family-name:var(--font-display)] text-[length:var(--space-6)] font-[var(--font-weight-display)] italic leading-none tracking-[var(--letter-spacing-display)] text-[color:var(--color-primary-500)]">
                   {year}
                 </span>
                 <p className="font-[family-name:var(--font-body)] text-[length:var(--space-4)] leading-[var(--line-height-body)] text-[color:var(--color-text)]">

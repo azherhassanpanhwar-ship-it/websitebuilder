@@ -1,28 +1,32 @@
 /**
  * LATTICE Theme #1 — Fine Dining
- * Footer component — expanded layout on the dark surface.
+ * Footer component — premium multi-column layout on the dark surface,
+ * with a hairline frame (the reference's signature) and a refined
+ * "Follow" + "Visit" + "Maison" + "Receive" grid.
  *
  * Design Law 5 — Footer
- *   - "expanded": 3-4 column grid — logo+tagline / nav / contact / social
- *   - Background: always `var(--color-surface-dark)` (deep brown)
+ *   - "expanded": 4-column grid — brand+tagline / Visit / Maison / Receive
+ *   - Background: always `var(--color-surface-dark)` (deep brown/black)
  *     — never the same as body. Required by Skill 2.
+ *   - Hairline frame at top and bottom (the reference).
  *
  * Skill 1 — CRDT
- *   Pure presentational component. No Yjs / useState.
+ *   Pure presentational component. The newsletter form has ephemeral
+ *   state (allowed per CLAUDE.md §3 Skill 1).
  *
  * Skill 2 — W3C Design Tokens
  *   Every visual primitive is a `var(--token-*)` reference. No hex,
  *   no px literals.
  *
  * Skill 5 — lucide-react
- *   Send for the newsletter submit button; Globe for the language
- *   hint. Single icon system.
+ *   Send for the newsletter submit button; MapPin / Phone / Mail for
+ *   the visit column. Single icon system.
  */
 
 "use client";
 
 import * as React from "react";
-import { Send, Globe, MapPin, Phone, Mail } from "lucide-react";
+import { Send, MapPin, Phone, Mail, Disc3, Film } from "lucide-react";
 
 export interface FineDiningFooterLink {
   label: string;
@@ -38,7 +42,7 @@ export interface FineDiningFooterProps {
   brandName?: string;
   brandMark?: string;
   tagline?: string;
-  /** Navigation columns. Defaults to 2 standard columns. */
+  /** Navigation columns. Defaults to 2 standard columns (Visit / Maison). */
   columns?: FineDiningFooterColumn[];
   address?: string;
   phone?: string;
@@ -109,30 +113,79 @@ export function FineDiningFooter({
     <footer
       data-theme-footer
       aria-label="Site footer"
-      className="bg-[color:var(--color-surface-dark)] text-[color:var(--color-primary-100)]"
+      className="relative bg-[color:var(--color-surface-dark)] text-[color:var(--color-primary-100)]"
     >
-      <div className="mx-auto w-full max-w-[1440px] px-[var(--space-5)] py-[var(--space-9)] md:px-[var(--space-6)]">
-        <div className="grid grid-cols-1 gap-[var(--space-8)] md:grid-cols-2 lg:grid-cols-4">
-          {/* ─── Brand + tagline ─────────────────────────────────────── */}
-          <div>
+      {/* ─── Hairline top frame (the reference's signature) ─────────── */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[color:var(--color-border)] opacity-70"
+      />
+
+      <div className="mx-auto w-full max-w-[var(--container-max)] px-[var(--margin-mobile)] py-[var(--space-10)] md:px-[var(--margin-desktop)] md:py-[var(--space-10)]">
+        {/* ─── Brand block — sits across the top, more theatrical ──────── */}
+        <div className="grid grid-cols-1 items-end gap-[var(--space-7)] border-b border-[color:var(--color-border)] pb-[var(--space-8)] md:grid-cols-12">
+          <div className="md:col-span-7">
             <a
               href="#top"
               className="inline-flex items-center gap-[var(--space-3)] rounded-[var(--radius-sm)] focus-visible:outline-2 focus-visible:outline-[color:var(--color-focus-ring)] focus-visible:outline-offset-2"
               aria-label={`${brandName} — home`}
             >
-              <span className="flex h-[var(--space-7)] w-[var(--space-7)] items-center justify-center rounded-[var(--radius-sm)] border border-[color:var(--color-primary-500)] font-[family-name:var(--font-display)] text-[length:var(--space-4)] font-[var(--font-weight-display)] leading-none text-[color:var(--color-primary-500)]">
+              <span className="flex h-[var(--space-8)] w-[var(--space-8)] items-center justify-center rounded-[var(--radius-sm)] border border-[color:var(--color-primary-500)] font-[family-name:var(--font-display)] text-[length:var(--space-5)] font-[var(--font-weight-display)] italic leading-none text-[color:var(--color-primary-500)]">
                 {brandMark}
               </span>
-              <span className="font-[family-name:var(--font-display)] text-[length:var(--space-5)] font-[var(--font-weight-display)] leading-none tracking-[var(--letter-spacing-display)] text-[color:var(--color-on-primary)]">
+              <span className="font-[family-name:var(--font-display)] text-[length:var(--space-7)] font-[var(--font-weight-display)] leading-none tracking-[var(--letter-spacing-display)] text-[color:var(--color-on-primary)]">
                 {brandName}
               </span>
             </a>
-            <p className="mt-[var(--space-4)] max-w-xs font-[family-name:var(--font-body)] text-[length:var(--space-4)] font-[var(--font-weight-body-regular)] leading-[var(--line-height-body)] text-[color:var(--color-primary-200)]">
+            <p className="mt-[var(--space-5)] max-w-md font-[family-name:var(--font-display)] text-[length:clamp(1.5rem,2.2vw,2rem)] font-[var(--font-weight-display-italic)] italic leading-[var(--line-height-subhead)] text-[color:var(--color-primary-200)]">
               {tagline}
             </p>
+          </div>
 
-            {/* Contact lines */}
-            <ul className="mt-[var(--space-5)] flex flex-col gap-[var(--space-3)] font-[family-name:var(--font-body)] text-[length:var(--space-3)] text-[color:var(--color-primary-200)]">
+          <div className="md:col-span-5">
+            <p className="font-[family-name:var(--font-body)] text-[length:var(--space-3)] font-[var(--font-weight-body-semibold)] uppercase tracking-[var(--letter-spacing-eyebrow)] text-[color:var(--color-primary-500)]">
+              Follow the room
+            </p>
+            <ul className="mt-[var(--space-4)] flex flex-wrap items-center gap-[var(--space-4)]">
+              <li>
+                <a
+                  href="#"
+                  className="inline-flex items-center gap-[var(--space-2)] font-[family-name:var(--font-body)] text-[length:var(--space-3)] uppercase tracking-[var(--letter-spacing-eyebrow)] text-[color:var(--color-primary-100)] transition-colors duration-[var(--duration-base)] ease-[var(--easing-standard)] hover:text-[color:var(--color-primary-500)] focus-visible:outline-2 focus-visible:outline-[color:var(--color-focus-ring)] focus-visible:outline-offset-2"
+                >
+                  <Disc3 className="h-[var(--space-3)] w-[var(--space-3)]" aria-hidden="true" />
+                  Instagram
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="inline-flex items-center gap-[var(--space-2)] font-[family-name:var(--font-body)] text-[length:var(--space-3)] uppercase tracking-[var(--letter-spacing-eyebrow)] text-[color:var(--color-primary-100)] transition-colors duration-[var(--duration-base)] ease-[var(--easing-standard)] hover:text-[color:var(--color-primary-500)] focus-visible:outline-2 focus-visible:outline-[color:var(--color-focus-ring)] focus-visible:outline-offset-2"
+                >
+                  <Disc3 className="h-[var(--space-3)] w-[var(--space-3)]" aria-hidden="true" />
+                  Spotify
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="inline-flex items-center gap-[var(--space-2)] font-[family-name:var(--font-body)] text-[length:var(--space-3)] uppercase tracking-[var(--letter-spacing-eyebrow)] text-[color:var(--color-primary-100)] transition-colors duration-[var(--duration-base)] ease-[var(--easing-standard)] hover:text-[color:var(--color-primary-500)] focus-visible:outline-2 focus-visible:outline-[color:var(--color-focus-ring)] focus-visible:outline-offset-2"
+                >
+                  <Film className="h-[var(--space-3)] w-[var(--space-3)]" aria-hidden="true" />
+                  Vimeo
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        {/* ─── Four-column link grid ──────────────────────────────────── */}
+        <div className="mt-[var(--space-8)] grid grid-cols-1 gap-[var(--space-7)] md:grid-cols-2 lg:grid-cols-4">
+          {/* Contact column */}
+          <div>
+            <h3 className="font-[family-name:var(--font-body)] text-[length:var(--space-3)] font-[var(--font-weight-body-semibold)] uppercase tracking-[var(--letter-spacing-eyebrow)] text-[color:var(--color-primary-500)]">
+              Find us
+            </h3>
+            <ul className="mt-[var(--space-4)] flex flex-col gap-[var(--space-3)] font-[family-name:var(--font-body)] text-[length:var(--space-3)] text-[color:var(--color-primary-100)]">
               <li className="flex items-start gap-[var(--space-2)]">
                 <MapPin
                   className="mt-[var(--space-1)] h-[var(--space-3)] w-[var(--space-3)] shrink-0 text-[color:var(--color-primary-500)]"
@@ -167,7 +220,7 @@ export function FineDiningFooter({
             </ul>
           </div>
 
-          {/* ─── Navigation columns ──────────────────────────────────── */}
+          {/* Navigation columns */}
           {columns.map((col) => (
             <nav key={col.title} aria-label={col.title}>
               <h3 className="font-[family-name:var(--font-body)] text-[length:var(--space-3)] font-[var(--font-weight-body-semibold)] uppercase tracking-[var(--letter-spacing-eyebrow)] text-[color:var(--color-primary-500)]">
@@ -188,7 +241,7 @@ export function FineDiningFooter({
             </nav>
           ))}
 
-          {/* ─── Newsletter ──────────────────────────────────────────── */}
+          {/* Newsletter */}
           <div>
             <h3 className="font-[family-name:var(--font-body)] text-[length:var(--space-3)] font-[var(--font-weight-body-semibold)] uppercase tracking-[var(--letter-spacing-eyebrow)] text-[color:var(--color-primary-500)]">
               {newsletterHeadline}
@@ -220,7 +273,7 @@ export function FineDiningFooter({
                 <button
                   type="submit"
                   disabled={status === "submitting"}
-                  className="inline-flex shrink-0 items-center justify-center gap-[var(--space-2)] rounded-[var(--radius-sm)] bg-[color:var(--color-primary-500)] px-[var(--space-4)] font-[family-name:var(--font-body)] text-[length:var(--space-4)] font-[var(--font-weight-body-semibold)] text-[color:var(--color-on-primary)] shadow-[var(--shadow-sm)] transition-[background-color,box-shadow] duration-[var(--duration-base)] ease-[var(--easing-standard)] hover:bg-[color:var(--color-primary-700)] hover:shadow-[var(--shadow-md)] focus-visible:outline-2 focus-visible:outline-[color:var(--color-focus-ring)] focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-60"
+                  className="inline-flex shrink-0 items-center justify-center gap-[var(--space-2)] rounded-[var(--radius-sm)] bg-[color:var(--color-primary-500)] px-[var(--space-4)] font-[family-name:var(--font-body)] text-[length:var(--space-3)] font-[var(--font-weight-body-semibold)] uppercase tracking-[var(--letter-spacing-eyebrow)] text-[color:var(--color-on-primary)] shadow-[var(--shadow-sm)] transition-[background-color,box-shadow] duration-[var(--duration-base)] ease-[var(--easing-standard)] hover:bg-[color:var(--color-primary-700)] hover:shadow-[var(--shadow-md)] focus-visible:outline-2 focus-visible:outline-[color:var(--color-focus-ring)] focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   <Send className="h-[var(--space-3)] w-[var(--space-3)]" aria-hidden="true" />
                   {status === "submitting" ? "…" : newsletterCta}
@@ -247,32 +300,34 @@ export function FineDiningFooter({
         </div>
 
         {/* ─── Bottom bar ───────────────────────────────────────────── */}
-        <div className="mt-[var(--space-9)] flex flex-col items-start gap-[var(--space-3)] border-t border-[color:var(--color-primary-900)] pt-[var(--space-5)] sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-[var(--space-9)] flex flex-col items-start gap-[var(--space-3)] border-t border-[color:var(--color-border)] pt-[var(--space-5)] sm:flex-row sm:items-center sm:justify-between">
           <p className="font-[family-name:var(--font-body)] text-[length:var(--space-3)] text-[color:var(--color-primary-200)]">
             © {copyrightYear} {brandName}. All rights reserved.
           </p>
-          <div className="flex items-center gap-[var(--space-3)] font-[family-name:var(--font-body)] text-[length:var(--space-3)] text-[color:var(--color-primary-200)]">
-            <Globe className="h-[var(--space-3)] w-[var(--space-3)]" aria-hidden="true" />
-            <button
-              type="button"
-              className="rounded-[var(--radius-xs)] underline-offset-4 transition-colors duration-[var(--duration-base)] ease-[var(--easing-standard)] hover:text-[color:var(--color-on-primary)] focus-visible:outline-2 focus-visible:outline-[color:var(--color-focus-ring)] focus-visible:outline-offset-2"
-              aria-label="Change language"
-            >
-              English (US)
-            </button>
-            <span aria-hidden="true">·</span>
+          <div className="flex flex-wrap items-center gap-[var(--space-3)] font-[family-name:var(--font-body)] text-[length:var(--space-3)] text-[color:var(--color-primary-200)]">
             <a
               href="#privacy"
               className="rounded-[var(--radius-xs)] underline-offset-4 transition-colors duration-[var(--duration-base)] ease-[var(--easing-standard)] hover:text-[color:var(--color-on-primary)] focus-visible:outline-2 focus-visible:outline-[color:var(--color-focus-ring)] focus-visible:outline-offset-2"
             >
               Privacy
             </a>
-            <span aria-hidden="true">·</span>
+            <span aria-hidden="true" className="text-[color:var(--color-border)]">
+              ·
+            </span>
             <a
               href="#terms"
               className="rounded-[var(--radius-xs)] underline-offset-4 transition-colors duration-[var(--duration-base)] ease-[var(--easing-standard)] hover:text-[color:var(--color-on-primary)] focus-visible:outline-2 focus-visible:outline-[color:var(--color-focus-ring)] focus-visible:outline-offset-2"
             >
               Terms
+            </a>
+            <span aria-hidden="true" className="text-[color:var(--color-border)]">
+              ·
+            </span>
+            <a
+              href="#accessibility"
+              className="rounded-[var(--radius-xs)] underline-offset-4 transition-colors duration-[var(--duration-base)] ease-[var(--easing-standard)] hover:text-[color:var(--color-on-primary)] focus-visible:outline-2 focus-visible:outline-[color:var(--color-focus-ring)] focus-visible:outline-offset-2"
+            >
+              Accessibility
             </a>
           </div>
         </div>
