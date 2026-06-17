@@ -350,12 +350,13 @@ function Field(props: FieldProps) {
   const describedBy =
     [error ? errorId : null, hint ? hintId : null].filter(Boolean).join(" ") || undefined;
   const labelClass =
-    "block font-[family-name:var(--font-body)] text-[length:var(--space-3)] font-[var(--font-weight-body-semibold)] uppercase tracking-[var(--letter-spacing-eyebrow)] text-[color:var(--color-text)]";
+    "block font-[family-name:var(--font-body)] text-[length:var(--space-3)] font-[var(--font-weight-body-semibold)] uppercase tracking-[0.2em] text-[color:var(--color-text-muted)]";
+  // Underline-only inputs (the reference's minimal luxury style)
   const controlBase =
-    "block w-full min-h-[var(--space-7)] rounded-[var(--radius-sm)] border bg-[color:var(--color-surface)] px-[var(--space-4)] py-[var(--space-3)] font-[family-name:var(--font-body)] text-[length:var(--space-4)] text-[color:var(--color-text)] placeholder:text-[color:var(--color-text-muted)] transition-[border-color,box-shadow] duration-[var(--duration-base)] ease-[var(--easing-standard)] focus:outline-2 focus:outline-offset-2";
+    "block w-full min-h-[var(--space-7)] border-0 border-b bg-transparent px-0 py-[var(--space-2)] font-[family-name:var(--font-body)] text-[length:var(--space-4)] text-[color:var(--color-text)] placeholder:text-[color:var(--color-text-faint)] transition-colors duration-[var(--duration-base)] ease-[var(--easing-standard)] focus:outline-none";
   const borderClass = error
-    ? "border-[color:var(--color-error)] focus:outline-[color:var(--color-error)]"
-    : "border-[color:var(--color-border)] focus:border-[color:var(--color-primary-500)] focus:outline-[color:var(--color-focus-ring)]";
+    ? "border-[color:var(--color-error)] focus:border-[color:var(--color-error)]"
+    : "border-[color:var(--color-border)] focus:border-[color:var(--color-primary-500)]";
 
   return (
     <div className="flex flex-col gap-[var(--space-2)]">
